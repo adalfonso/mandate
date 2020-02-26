@@ -1,0 +1,33 @@
+{
+  "name": "mandate",
+  "version": "0.0.1",
+  "description": "A tiny yet performant date manipulation library",
+  "main": "webpack.config.js",
+  "scripts": {
+    "dev": "webpack --progress --hide-modules --mode development",
+    "watch": "webpack --watch --progress --hide-modules --mode development",
+    "hot": "webpack-dev-server --inline --hot",
+    "production": "webpack -p --progress --hide-modules",
+    "test": "mocha -r ts-node/register tests/**/*.test.ts",
+    "coverage": "nyc -r lcov -e .ts -x \"*.test.ts\" npm run test"
+  },
+  "author": "",
+  "license": "BSD",
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/preset-env": "^7.4.5",
+    "@types/chai": "^4.2.6",
+    "@types/mocha": "^5.2.7",
+    "babel-loader": "^8.0.6",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "nyc": "^14.1.1",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.3",
+    "webpack": "^4.35.2",
+    "webpack-cli": "^3.3.5"
+  },
+  "dependencies": {
+    "awesome-typescript-loader": "^5.2.1"
+  }
+}
