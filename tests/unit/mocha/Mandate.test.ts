@@ -2,10 +2,35 @@ import { expect } from "chai";
 import Sut from "../../../src/ts/Mandate";
 
 describe("Mandate", function() {
-  it("creates a new instance", function() {
-    const sut = new Sut(new Date());
+  describe("Create class instance", function() {
+    it("creates a new instance", function() {
+      const sut = new Sut(new Date());
 
-    expect(true).equal(true);
+      expect(true).equal(true);
+    });
+
+    it("new-ups a 'now' instance with no arguments", function() {
+      const sut = new Sut();
+      const now = new Date();
+
+      expect(sut.format("YYYY")).equal(now.getFullYear().toString());
+      expect(sut.format("M")).equal((now.getMonth() + 1).toString());
+      expect(sut.format("D")).equal(now.getDate().toString());
+    });
+
+    it("new-ups a 'now' instance with an empty date", function() {
+      const sut = new Sut(new Date());
+      const now = new Date();
+
+      expect(sut.format("YYYY")).equal(now.getFullYear().toString());
+      expect(sut.format("M")).equal((now.getMonth() + 1).toString());
+      expect(sut.format("D")).equal(now.getDate().toString());
+    });
+
+    it("new-ups an instance from a western date string", function() {
+      const sut = new Sut("July 4, 2005");
+      expect(sut.format("YYYY-MM-DD")).equal("2005-07-04");
+    });
   });
 
   describe("basic format", function() {
@@ -18,7 +43,6 @@ describe("Mandate", function() {
     it("formats short year", function() {
       const sut = new Sut(new Date(2020, 1, 1));
 
-      expect(sut.format("YYY")).equal("20");
       expect(sut.format("YY")).equal("20");
     });
 

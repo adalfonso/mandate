@@ -16,7 +16,7 @@ const months = [
 const formatInputs = {
   "Y{4}": date => date.getFullYear().toString(),
 
-  "Y{2,3}": date =>
+  "Y{2}": date =>
     date
       .getFullYear()
       .toString()
@@ -43,8 +43,10 @@ const formatInputs = {
 export default class Mandate {
   private _date: Date;
 
-  constructor(date: Date | string) {
-    if (typeof date === "string") {
+  constructor(date?: Date | string) {
+    if (typeof date === "undefined") {
+      this._date = new Date();
+    } else if (typeof date === "string") {
       this._date = new Date(date);
     } else {
       this._date = date;
