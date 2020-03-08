@@ -40,7 +40,7 @@ const formatInputs = {
   "D(?!e)": date => date.getDate()
 };
 
-export default class Mandate {
+export class Mandate {
   private _date: Date;
 
   constructor(date?: Date | string) {
@@ -63,4 +63,8 @@ export default class Mandate {
 
     return input;
   }
+}
+
+export default function mandate(date?: Date | string) {
+  return new Mandate(date);
 }

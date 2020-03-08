@@ -23,12 +23,12 @@ ___
 New-up a mandate class.
 
 ```javascript
-import Mandate from 'mandate';
-let now = Mandate();
+import mandate from 'mandate';
+let now = mandate();
 // or
-let then = Mandate('January 1, 2020'));
+let then = mandate('January 1, 2020'));
 // or
-let wayback = Mandate(Date(1990, 5, 18));
+let wayback = mandate(Date(1990, 5, 18));
 ```
 
 ###### format(format: string)
@@ -47,7 +47,7 @@ Format accepts a string to convey a date using these patterns:
 
 
 ```javascript
-let forthOfJuly = Mandate('July 4, 2005');
+let forthOfJuly = mandate('July 4, 2005');
 
 forthOfjuly.format('YYYY-MM-DD');
 // 2005-07-04
