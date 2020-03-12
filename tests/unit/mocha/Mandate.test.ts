@@ -58,6 +58,11 @@ describe("Mandate", function() {
 
       expect(sut.format("MM")).equal("05");
       expect(sut.format("M")).equal("5");
+
+      const sut2 = Sut(new Date(2020, 10, 1));
+
+      expect(sut2.format("MM")).equal("11");
+      expect(sut2.format("M")).equal("11");
     });
 
     it("formats day", function() {
@@ -65,6 +70,47 @@ describe("Mandate", function() {
 
       expect(sut.format("DD")).equal("08");
       expect(sut.format("D")).equal("8");
+
+      const sut2 = Sut(new Date(2020, 4, 15));
+
+      expect(sut2.format("DD")).equal("15");
+      expect(sut2.format("D")).equal("15");
+    });
+
+    it("formats hours", function() {
+      const sut = Sut(new Date(2020, 4, 8, 4, 5, 3));
+
+      expect(sut.format("hh")).equal("04");
+      expect(sut.format("h")).equal("4");
+
+      const sut2 = Sut(new Date(2020, 4, 8, 18, 5, 3));
+
+      expect(sut2.format("hh")).equal("18");
+      expect(sut2.format("h")).equal("18");
+    });
+
+    it("formats minutes", function() {
+      const sut = Sut(new Date(2020, 4, 8, 4, 5, 3));
+
+      expect(sut.format("mm")).equal("05");
+      expect(sut.format("m")).equal("5");
+
+      const sut2 = Sut(new Date(2020, 4, 8, 4, 55, 3));
+
+      expect(sut2.format("mm")).equal("55");
+      expect(sut2.format("m")).equal("55");
+    });
+
+    it("formats seconds", function() {
+      const sut = Sut(new Date(2020, 4, 8, 4, 5, 3));
+
+      expect(sut.format("ss")).equal("03");
+      expect(sut.format("s")).equal("3");
+
+      const sut2 = Sut(new Date(2020, 4, 8, 4, 5, 10));
+
+      expect(sut2.format("ss")).equal("10");
+      expect(sut2.format("s")).equal("10");
     });
 
     it("doesn't format incorrect input", function() {
@@ -109,10 +155,10 @@ describe("Mandate", function() {
       expect(sut.format("MMM D, YYYY")).equal("Mar 8, 1989");
     });
 
-    it("formats ISO dates YYYY-MM-DD", function() {
-      const sut = Sut(new Date(1994, 6, 4));
+    it("formats ISO dates YYYY-MM-DD hh:mm:ss", function() {
+      const sut = Sut(new Date(1994, 6, 4, 2, 5, 8));
 
-      expect(sut.format("YYYY-MM-DD")).equal("1994-07-04");
+      expect(sut.format("YYYY-MM-DD hh:mm:ss")).equal("1994-07-04 02:05:08");
     });
 
     it("formats common nordic date (day month year)", function() {
@@ -120,24 +166,6 @@ describe("Mandate", function() {
 
       expect(sut.format("DD MMMM YYYY")).equal("08 March 1989");
       expect(sut.format("D MMM YYYY")).equal("8 Mar 1989");
-    });
-  });
-
-  describe("edge cases", function() {
-    it("formats date with injected words", function() {
-      const sut = Sut(new Date(1989, 2, 22));
-
-      expect(sut.format("MMMM yeah DD, YYYYhello")).equal(
-        "March yeah 22, 1989hello"
-      );
-    });
-
-    it("formats date with forbidden month names", function() {
-      const sut = Sut(new Date(1989, 2, 22));
-
-      expect(sut.format("MMMM MarchMay DecemberDD, YYYY")).equal(
-        "March MarchMay December22, 1989"
-      );
     });
   });
 });

@@ -22,22 +22,29 @@ const formatInputs = {
       .toString()
       .slice(-2),
 
-  "M{4}": date => months[date.getMonth()],
+  "h{2}": (date: Date) => Mandate.prefixZero(date.getHours()),
 
-  "M{3}": date => months[date.getMonth()].slice(0, 3),
+  "h{1}": (date: Date) => date.getHours(),
 
-  "M{2}(?!a)": date => {
-    let month = date.getMonth() + 1;
+  "m{2}": (date: Date) => Mandate.prefixZero(date.getMinutes()),
 
-    return month < 10 ? "0" + month : month;
-  },
+  "m{1}": (date: Date) => date.getMinutes(),
 
-  "M{1}(?!a)": date => date.getMonth() + 1,
+  "s{2}": (date: Date) => Mandate.prefixZero(date.getSeconds()),
 
-  "D{2}(?!e)": date =>
-    date.getDate() < 10 ? "0" + date.getDate() : date.getDate(),
+  "s{1}": (date: Date) => date.getSeconds(),
 
-  "D(?!e)": date => date.getDate()
+  "M{4}": (date: Date) => months[date.getMonth()],
+
+  "M{3}": (date: Date) => months[date.getMonth()].slice(0, 3),
+
+  "M{2}(?!a)": (date: Date) => Mandate.prefixZero(date.getMonth() + 1),
+
+  "M{1}(?!a)": (date: Date) => date.getMonth() + 1,
+
+  "D{2}(?!e)": (date: Date) => Mandate.prefixZero(date.getDate()),
+
+  "D(?!e)": (date: Date) => date.getDate()
 };
 
 export class Mandate {
@@ -62,6 +69,15 @@ export class Mandate {
     }
 
     return input;
+  }
+
+  /**
+   *
+   * @param  {number} A number
+   * @return {string} Zero-prefixed number
+   */
+  public static prefixZero(num: number): string {
+    return num < 10 ? "0" + num : num.toString();
   }
 }
 

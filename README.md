@@ -44,6 +44,12 @@ Format accepts a string to convey a date using these patterns:
 | M     | 1  - 12 | Numeric month             |
 | DD    | 01 - 31 | Date w/leading 0          |
 | D     | 1  - 31 | Date                      |
+| hh    | 01 - 12 | Hour w/leading 0          |
+| h     | 1  - 12 | Hour                      |
+| m     | 1  - 31 | Minute                    |
+| mm    | 01 - 31 | Minute w/leading 0        |
+| ss    | 01 - 12 | Second month w/leading 0  |
+| s     | 1  - 12 | Second month              |
 
 
 ```javascript
