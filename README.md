@@ -48,7 +48,7 @@ Format accepts a string to convey a date using these patterns:
 | DD    | 01 - 31 | Date w/leading 0             |
 | D     | 1 - 31  | Date                         |
 | HH    | 00 - 24 | 24 Hour w/leading 0          |
-| H     | 0 - 24  | 24 Hour w/leading            |
+| H     | 0 - 24  | 24 Hour                      |
 | hh    | 01 - 12 | 12 Hour w/leading 0          |
 | h     | 1 - 12  | 12 Hour                      |
 | mm    | 01 - 31 | Minute w/leading 0           |
@@ -59,8 +59,8 @@ Format accepts a string to convey a date using these patterns:
 | a     | am/pm   | Lowercase Ante/Post Meridiem |
 
 ```javascript
-let forthOfJuly = mandate("July 4, 2005");
+let forthOfJuly = mandate("July 4, 2005 7:32 pm");
 
-forthOfjuly.format("YYYY-MM-DD");
-// 2005-07-04
+forthOfjuly.format("YYYY-MM-DD HH:mm");
+// 2005-07-04 19:32
 ```
