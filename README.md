@@ -27,9 +27,13 @@ New-up a mandate class.
 ```javascript
 import mandate from 'mandate';
 let now = mandate();
+
 // or
+
 let then = mandate('January 1, 2020'));
+
 // or
+
 let wayback = mandate(Date(1990, 5, 18));
 ```
 
@@ -63,4 +67,66 @@ let forthOfJuly = mandate("July 4, 2005 7:32 pm");
 
 forthOfjuly.format("YYYY-MM-DD HH:mm");
 // 2005-07-04 19:32
+```
+
+###### lt(date: Mandate|Date|string)
+
+Compare if a date is less than another date
+
+```javascript
+let stPaddysDay = mandate("March 17, 2020");
+let hangoverRecoveryDay = mandate("March 18, 2020");
+
+stPaddysDay.lt(hangoverRecoveryDay);
+// true
+```
+
+###### lte(date: Mandate|Date|string)
+
+Compare if a date is less than or equal to another date
+
+```javascript
+let now = mandate();
+
+now.lte(now);
+// true
+```
+
+###### eq(date: Mandate|Date|string, precise: boolean)
+
+Compare if a date is equal to another date. Loosly compares on a date-level by default, but precise argument can be used for an exact comparison.
+
+```javascript
+let first = mandate(new Date(2020, 1, 1, 0));
+let oneHourLater = mandate(new Date(2020, 1, 1, 1));
+
+first.eq(oneHourLater);
+// true
+
+first.eq(oneHourLater, true);
+// false
+```
+
+###### gt(date: Mandate|Date|string)
+
+Compare if a date is greater than another date
+
+```javascript
+let first = mandate(new Date(2020, 1, 1));
+let second = mandate(new Date(2020, 1, 3));
+
+first.gt(second);
+// false
+```
+
+###### gte(date: Mandate|Date|string)
+
+Compare if a date is greater than or equal to another date
+
+```javascript
+let first = mandate(new Date(2020, 1, 1));
+let second = mandate(new Date(2020, 1, 3));
+
+second.gte(first);
+//true
 ```
