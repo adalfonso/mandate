@@ -37,24 +37,26 @@ let wayback = mandate(Date(1990, 5, 18));
 
 Format accepts a string to convey a date using these patterns:
 
-| Input | Output  | Description               |
-| ----- | ------- | ------------------------- |
-| YYYY  | 1999    | 4 digit year              |
-| YY    | 99      | 2 digit year              |
-| MMMM  | January | Full month                |
-| MMM   | Jan     | Abbreviated month         |
-| MM    | 01 - 12 | Numeric month w/leading 0 |
-| M     | 1 - 12  | Numeric month             |
-| DD    | 01 - 31 | Date w/leading 0          |
-| D     | 1 - 31  | Date                      |
-| HH    | 00 - 24 | 24 Hour w/leading 0       |
-| H     | 0 - 24  | 24 Hour w/leading         |
-| hh    | 01 - 12 | 12 Hour w/leading 0       |
-| h     | 1 - 12  | 12 Hour                   |
-| mm    | 01 - 31 | Minute w/leading 0        |
-| m     | 1 - 31  | Minute                    |
-| ss    | 01 - 12 | Second month w/leading 0  |
-| s     | 1 - 12  | Second month              |
+| Input | Output  | Description                  |
+| ----- | ------- | ---------------------------- |
+| YYYY  | 1999    | 4 digit year                 |
+| YY    | 99      | 2 digit year                 |
+| MMMM  | January | Full month                   |
+| MMM   | Jan     | Abbreviated month            |
+| MM    | 01 - 12 | Numeric month w/leading 0    |
+| M     | 1 - 12  | Numeric month                |
+| DD    | 01 - 31 | Date w/leading 0             |
+| D     | 1 - 31  | Date                         |
+| HH    | 00 - 24 | 24 Hour w/leading 0          |
+| H     | 0 - 24  | 24 Hour w/leading            |
+| hh    | 01 - 12 | 12 Hour w/leading 0          |
+| h     | 1 - 12  | 12 Hour                      |
+| mm    | 01 - 31 | Minute w/leading 0           |
+| m     | 1 - 31  | Minute                       |
+| ss    | 01 - 12 | Second month w/leading 0     |
+| s     | 1 - 12  | Second month                 |
+| A     | AM/PM   | Capital Ante/Post Meridiem   |
+| a     | am/pm   | Lowercase Ante/Post Meridiem |
 
 ```javascript
 let forthOfJuly = mandate("July 4, 2005");

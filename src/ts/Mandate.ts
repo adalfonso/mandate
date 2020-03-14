@@ -22,6 +22,10 @@ const formatInputs = {
             .toString()
             .slice(-2),
 
+    A: (date: Date) => (date.getHours() < 12 ? "AM" : "PM"),
+
+    a: (date: Date) => (date.getHours() < 12 ? "am" : "pm"),
+
     "H{2}": (date: Date) => Mandate.prefixZero(date.getHours()),
 
     "H{1}": (date: Date) => date.getHours(),
@@ -33,7 +37,7 @@ const formatInputs = {
 
     "m{2}": (date: Date) => Mandate.prefixZero(date.getMinutes()),
 
-    "m{1}": (date: Date) => date.getMinutes(),
+    "(?<!a)(?<!p)m{1}": (date: Date) => date.getMinutes(),
 
     "s{2}": (date: Date) => Mandate.prefixZero(date.getSeconds()),
 
@@ -45,7 +49,7 @@ const formatInputs = {
 
     "M{2}(?!a)": (date: Date) => Mandate.prefixZero(date.getMonth() + 1),
 
-    "M{1}(?!a)": (date: Date) => date.getMonth() + 1,
+    "(?<!A)(?<!P)M{1}(?!a)": (date: Date) => date.getMonth() + 1,
 
     "D{2}(?!e)": (date: Date) => Mandate.prefixZero(date.getDate()),
 

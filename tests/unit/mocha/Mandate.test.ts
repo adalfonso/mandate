@@ -111,6 +111,23 @@ describe("Mandate", function() {
             expect(sut3.format("h")).equal("1");
         });
 
+        it("formats ante and post meridiem", function() {
+            const sut = Sut(new Date(2020, 4, 8, 4, 5, 3));
+
+            expect(sut.format("a")).equal("am");
+            expect(sut.format("A")).equal("AM");
+
+            const sut2 = Sut(new Date(2020, 4, 8, 0, 5, 3));
+
+            expect(sut2.format("a")).equal("am");
+            expect(sut2.format("A")).equal("AM");
+
+            const sut3 = Sut(new Date(2020, 4, 8, 13, 5, 3));
+
+            expect(sut3.format("a")).equal("pm");
+            expect(sut3.format("A")).equal("PM");
+        });
+
         it("formats minutes", function() {
             const sut = Sut(new Date(2020, 4, 8, 4, 5, 3));
 
@@ -177,11 +194,11 @@ describe("Mandate", function() {
             expect(sut.format("MMM D, YYYY")).equal("Mar 8, 1989");
         });
 
-        it("formats ISO dates YYYY-MM-DD hh:mm:ss", function() {
-            const sut = Sut(new Date(1994, 6, 4, 2, 5, 8));
+        it("formats ISO dates YYYY-MM-DD HH:mm:ss", function() {
+            const sut = Sut(new Date(1994, 6, 4, 14, 5, 8));
 
-            expect(sut.format("YYYY-MM-DD hh:mm:ss")).equal(
-                "1994-07-04 02:05:08"
+            expect(sut.format("YYYY-MM-DD HH:mm:ss")).equal(
+                "1994-07-04 14:05:08"
             );
         });
 
@@ -190,6 +207,12 @@ describe("Mandate", function() {
 
             expect(sut.format("DD MMMM YYYY")).equal("08 March 1989");
             expect(sut.format("D MMM YYYY")).equal("8 Mar 1989");
+        });
+
+        it("formats 12 hour time h:m:s a", function() {
+            const sut = Sut(new Date(1989, 2, 8, 15, 45, 22));
+
+            expect(sut.format("h:m:ss a")).equal("3:45:22 pm");
         });
     });
 });
