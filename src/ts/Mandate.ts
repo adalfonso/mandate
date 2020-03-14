@@ -1,86 +1,104 @@
 const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
 ];
 
 const formatInputs = {
-  "Y{4}": date => date.getFullYear().toString(),
+    "Y{4}": date => date.getFullYear().toString(),
 
-  "Y{2}": date =>
-    date
-      .getFullYear()
-      .toString()
-      .slice(-2),
+    "Y{2}": date =>
+        date
+            .getFullYear()
+            .toString()
+            .slice(-2),
 
-  "h{2}": (date: Date) => Mandate.prefixZero(date.getHours()),
+    "H{2}": (date: Date) => Mandate.prefixZero(date.getHours()),
 
-  "h{1}": (date: Date) => date.getHours(),
+    "H{1}": (date: Date) => date.getHours(),
 
-  "m{2}": (date: Date) => Mandate.prefixZero(date.getMinutes()),
+    "h{2}": (date: Date) =>
+        Mandate.prefixZero(Mandate.twelveHour(date.getHours())),
 
-  "m{1}": (date: Date) => date.getMinutes(),
+    "h{1}": (date: Date) => Mandate.twelveHour(date.getHours()),
 
-  "s{2}": (date: Date) => Mandate.prefixZero(date.getSeconds()),
+    "m{2}": (date: Date) => Mandate.prefixZero(date.getMinutes()),
 
-  "s{1}": (date: Date) => date.getSeconds(),
+    "m{1}": (date: Date) => date.getMinutes(),
 
-  "M{4}": (date: Date) => months[date.getMonth()],
+    "s{2}": (date: Date) => Mandate.prefixZero(date.getSeconds()),
 
-  "M{3}": (date: Date) => months[date.getMonth()].slice(0, 3),
+    "s{1}": (date: Date) => date.getSeconds(),
 
-  "M{2}(?!a)": (date: Date) => Mandate.prefixZero(date.getMonth() + 1),
+    "M{4}": (date: Date) => months[date.getMonth()],
 
-  "M{1}(?!a)": (date: Date) => date.getMonth() + 1,
+    "M{3}": (date: Date) => months[date.getMonth()].slice(0, 3),
 
-  "D{2}(?!e)": (date: Date) => Mandate.prefixZero(date.getDate()),
+    "M{2}(?!a)": (date: Date) => Mandate.prefixZero(date.getMonth() + 1),
 
-  "D(?!e)": (date: Date) => date.getDate()
+    "M{1}(?!a)": (date: Date) => date.getMonth() + 1,
+
+    "D{2}(?!e)": (date: Date) => Mandate.prefixZero(date.getDate()),
+
+    "D(?!e)": (date: Date) => date.getDate()
 };
 
 export class Mandate {
-  private _date: Date;
+    private _date: Date;
 
-  constructor(date?: Date | string) {
-    if (typeof date === "undefined") {
-      this._date = new Date();
-    } else if (typeof date === "string") {
-      this._date = new Date(date);
-    } else {
-      this._date = date;
-    }
-  }
-
-  public format(input: string): string {
-    for (let parseInput in formatInputs) {
-      let regex = new RegExp(parseInput, "g");
-      let closure = formatInputs[parseInput];
-
-      input = input.replace(regex, closure(this._date));
+    constructor(date?: Date | string) {
+        if (typeof date === "undefined") {
+            this._date = new Date();
+        } else if (typeof date === "string") {
+            this._date = new Date(date);
+        } else {
+            this._date = date;
+        }
     }
 
-    return input;
-  }
+    public format(input: string): string {
+        for (let parseInput in formatInputs) {
+            let regex = new RegExp(parseInput, "g");
+            let closure = formatInputs[parseInput];
 
-  /**
-   *
-   * @param  {number} A number
-   * @return {string} Zero-prefixed number
-   */
-  public static prefixZero(num: number): string {
-    return num < 10 ? "0" + num : num.toString();
-  }
+            input = input.replace(regex, closure(this._date));
+        }
+
+        return input;
+    }
+
+    /**
+     * Prefix a string with a zero if a single digit
+     *
+     * @param  {number} A number
+     * @return {string} Zero-prefixed number
+     */
+    public static prefixZero(num: number): string {
+        return num < 10 ? "0" + num : num.toString();
+    }
+
+    /**
+     * Convert 24 hours to 12 hours
+     *
+     * @param  {number} Hour
+     * @return {number} Converted hour
+     */
+    public static twelveHour(hour) {
+        hour = hour % 12;
+
+        return hour === 0 ? 12 : hour;
+    }
 }
 
 export default function mandate(date?: Date | string) {
-  return new Mandate(date);
+    return new Mandate(date);
 }
