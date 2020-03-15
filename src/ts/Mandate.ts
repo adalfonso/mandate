@@ -79,25 +79,13 @@ export class Mandate {
   }
 
   /**
-   * Find the difference between two dates
-   *
-   * @param date {Datelike} Date to compare
-   * @return     {number}   Difference in seconds
-   */
-  public compare(date: Datelike) {
-    date = this._getMandate(date);
-
-    return this._date.valueOf() - date.getUnixMs();
-  }
-
-  /**
    * Determine if date is less than another date
    *
    * @param date {Datelike} Date to compare
    * @return     {boolean}  If date is less than another date
    */
-  public lt(date: Datelike) {
-    return this.compare(date) < 0;
+  public lt(date: Datelike): boolean {
+    return this._getDiff(date, false) < 0;
   }
 
   /**
@@ -106,8 +94,8 @@ export class Mandate {
    * @param date {Datelike} Date to compare
    * @return     {boolean}  If date is less than of equal to another date
    */
-  public lte(date: Datelike) {
-    return this.compare(date) <= 0;
+  public lte(date: Datelike): boolean {
+    return this._getDiff(date, false) <= 0;
   }
 
   /**
@@ -117,11 +105,11 @@ export class Mandate {
    * @param precise {boolean}  If comparison should be exact to the millesecond
    * @return        {boolean}  If date is equal to another date
    */
-  public eq(date: Datelike, precise = false) {
+  public eq(date: Datelike, precise: boolean = true): boolean {
     date = this._getMandate(date);
 
     if (precise) {
-      return this.compare(date) === 0;
+      return this._getDiff(date, false) === 0;
     }
 
     return (
@@ -137,8 +125,8 @@ export class Mandate {
    * @param date {Datelike} Date to compare
    * @return     {boolean}  If date is greater than another date
    */
-  public gt(date: Datelike) {
-    return this.compare(date) > 0;
+  public gt(date: Datelike): boolean {
+    return this._getDiff(date, false) > 0;
   }
 
   /**
@@ -147,8 +135,8 @@ export class Mandate {
    * @param date {Datelike} Date to compare
    * @return     {boolean}  If date is greater than or equal to another date
    */
-  public gte(date: Datelike) {
-    return this.compare(date) >= 0;
+  public gte(date: Datelike): boolean {
+    return this._getDiff(date, false) >= 0;
   }
 
   /**
@@ -156,7 +144,7 @@ export class Mandate {
    *
    * @return {number} The number of milleseconds since January 1, 1970 (UTC/GMT)
    */
-  public getUnixMs() {
+  public getUnixMs(): number {
     return this._date.valueOf();
   }
 
@@ -165,11 +153,10 @@ export class Mandate {
    *
    * @param date {Datelike} Date to compare
    * @param abs  {boolean}  If result should be the absolute value
+   * @return     {number}   Difference between two dates in milleseconds
    */
-  public diffInMilleseconds(date: Datelike, abs: boolean = true) {
-    let modifier = 1;
-
-    return this._getDiff(date, modifier, abs);
+  public diffInMilleseconds(date: Datelike, abs: boolean = true): number {
+    return this._getDiff(date, abs);
   }
 
   /**
@@ -177,11 +164,10 @@ export class Mandate {
    *
    * @param date {Datelike} Date to compare
    * @param abs  {boolean}  If result should be the absolute value
+   * @return     {number}   Difference between two dates in seconds
    */
-  public diffInSeconds(date: Datelike, abs: boolean = true) {
-    let modifier = 1000;
-
-    return this._getDiff(date, modifier, abs);
+  public diffInSeconds(date: Datelike, abs: boolean = true): number {
+    return this._getDiff(date, abs, 1000);
   }
 
   /**
@@ -189,11 +175,10 @@ export class Mandate {
    *
    * @param date {Datelike} Date to compare
    * @param abs  {boolean}  If result should be the absolute value
+   * @return     {number}   Difference between two dates in minutes
    */
-  public diffInMinutes(date: Datelike, abs: boolean = true) {
-    let modifier = 1000 * 60;
-
-    return this._getDiff(date, modifier, abs);
+  public diffInMinutes(date: Datelike, abs: boolean = true): number {
+    return this._getDiff(date, abs, 1000 * 60);
   }
 
   /**
@@ -201,11 +186,10 @@ export class Mandate {
    *
    * @param date {Datelike} Date to compare
    * @param abs  {boolean}  If result should be the absolute value
+   * @return     {number}   Difference between two dates in hours
    */
-  public diffInHours(date: Datelike, abs: boolean = true) {
-    let modifier = 1000 * 60 * 60;
-
-    return this._getDiff(date, modifier, abs);
+  public diffInHours(date: Datelike, abs: boolean = true): number {
+    return this._getDiff(date, abs, 1000 * 60 * 60);
   }
 
   /**
@@ -213,11 +197,10 @@ export class Mandate {
    *
    * @param date {Datelike} Date to compare
    * @param abs  {boolean}  If result should be the absolute value
+   * @return     {number}   Difference between two dates in days
    */
-  public diffInDays(date: Datelike, abs: boolean = true) {
-    let modifier = 1000 * 60 * 60 * 24;
-
-    return this._getDiff(date, modifier, abs);
+  public diffInDays(date: Datelike, abs: boolean = true): number {
+    return this._getDiff(date, abs, 1000 * 60 * 60 * 24);
   }
 
   /**
@@ -225,11 +208,10 @@ export class Mandate {
    *
    * @param date {Datelike} Date to compare
    * @param abs  {boolean}  If result should be the absolute value
+   * @return     {number}   Difference between two dates in weeks
    */
-  public diffInWeeks(date: Datelike, abs: boolean = true) {
-    let modifier = 1000 * 60 * 60 * 24 * 7;
-
-    return this._getDiff(date, modifier, abs);
+  public diffInWeeks(date: Datelike, abs: boolean = true): number {
+    return this._getDiff(date, abs, 1000 * 60 * 60 * 24 * 7);
   }
 
   /**
@@ -237,21 +219,25 @@ export class Mandate {
    *
    * @param date {Datelike} Date to compare
    * @param abs  {boolean}  If result should be the absolute value
+   * @return     {number}   Difference between two dates in years
    */
-  public diffInYears(date: Datelike, abs: boolean = true) {
-    let modifier = 1000 * 60 * 60 * 24 * 365;
-
-    return this._getDiff(date, modifier, abs);
+  public diffInYears(date: Datelike, abs: boolean = true): number {
+    return this._getDiff(date, abs, 1000 * 60 * 60 * 24 * 365);
   }
 
   /**
    * Get difference between two dates based on a millesecond modifier
    *
    * @param date    {Datelike} Date to compare
-   * @param modifer {number} Modifier in milleseconds
    * @param abs     {boolean}  If result should be the absolute value
+   * @param modifer {number} Modifier in milleseconds
+   * @return        {number} Difference between two dates
    */
-  private _getDiff(date: Datelike, modifier: number = 1, abs: boolean = true) {
+  private _getDiff(
+    date: Datelike,
+    abs: boolean = true,
+    modifier: number = 1
+  ): number {
     date = this._getMandate(date);
 
     let diff = (this.getUnixMs() - date.getUnixMs()) / modifier;

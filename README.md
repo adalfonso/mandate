@@ -20,9 +20,9 @@ MIT
 
 #### Docs:
 
-###### mandate(date?: Date | string)
+##### mandate(date?: Mandate | Date | string): Mandate
 
-New-up a mandate class.
+Helper function to new-up a mandate class.
 
 ```javascript
 import mandate from 'mandate';
@@ -37,7 +37,7 @@ let then = mandate('January 1, 2020'));
 let wayback = mandate(Date(1990, 5, 18));
 ```
 
-###### format(format: string)
+##### format(format: string): string
 
 Format accepts a string to convey a date using these patterns:
 
@@ -69,7 +69,7 @@ forthOfjuly.format("YYYY-MM-DD HH:mm");
 // 2005-07-04 19:32
 ```
 
-###### lt(date: Mandate|Date|string)
+##### lt(date: Mandate | Date | string): boolean
 
 Compare if a date is less than another date
 
@@ -81,7 +81,7 @@ stPaddysDay.lt(hangoverRecoveryDay);
 // true
 ```
 
-###### lte(date: Mandate|Date|string)
+##### lte(date: Mandate | Date | string): boolean
 
 Compare if a date is less than or equal to another date
 
@@ -92,22 +92,22 @@ now.lte(now);
 // true
 ```
 
-###### eq(date: Mandate|Date|string, precise: boolean)
+##### eq(date: Mandate | Date | string, precise: boolean): boolean
 
-Compare if a date is equal to another date. Loosly compares on a date-level by default, but precise argument can be used for an exact comparison.
+Compare if a date is equal to another date. strictly compares on a date-level by default, but precise argument can be used for an loose comparison.
 
 ```javascript
 let first = mandate(new Date(2020, 1, 1, 0));
 let oneHourLater = mandate(new Date(2020, 1, 1, 1));
 
 first.eq(oneHourLater);
-// true
-
-first.eq(oneHourLater, true);
 // false
+
+first.eq(oneHourLater, false);
+// true
 ```
 
-###### gt(date: Mandate|Date|string)
+##### gt(date: Mandate | Date | string): boolean
 
 Compare if a date is greater than another date
 
@@ -119,7 +119,7 @@ first.gt(second);
 // false
 ```
 
-###### gte(date: Mandate|Date|string)
+##### gte(date: Mandate | Date | string): boolean
 
 Compare if a date is greater than or equal to another date
 
@@ -131,13 +131,19 @@ second.gte(first);
 // true
 ```
 
-###### diffInYears(date: Mandate|Date|string, abs: boolean)
-###### diffInWeeks...
-###### diffInDays...
-###### diffInHours...
-###### diffInMinutes...
-###### diffInSeconds...
-###### diffInMilleseconds...
+##### diffInYears(date: Mandate | Date | string, abs: boolean): number
+
+##### diffInWeeks(date: Mandate | Date | string, abs: boolean): number
+
+##### diffInDays(date: Mandate | Date | string, abs: boolean): number
+
+##### diffInHours(date: Mandate | Date | string, abs: boolean): number
+
+##### diffInMinutes(date: Mandate | Date | string, abs: boolean): number
+
+##### diffInSeconds(date: Mandate | Date | string, abs: boolean): number
+
+##### diffInMilleseconds(date: Mandate | Date | string, abs: boolean): number
 
 Get the difference in years, weeks, days, hours, minutes, seconds, or milleseconds between two dates. The second argument determines if the result should be an absolute value and is true by default.
 

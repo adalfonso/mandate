@@ -36,20 +36,11 @@ describe("Mandate", () => {
       const sut = Sut(new Date(2020, 1, 1, 1, 1, 1, 1));
       const copied = Sut(sut);
 
-      expect(sut.eq(copied, true)).equal(true);
+      expect(sut.eq(copied, false)).equal(true);
     });
   });
 
   describe("compare", () => {
-    it("raw compares two dates", () => {
-      const first = Sut(new Date(2020, 1, 1, 1, 1, 1, 0));
-      const second = Sut(new Date(2020, 1, 1, 1, 1, 1, 1));
-
-      expect(first.compare(second)).equal(-1);
-      expect(first.compare(first)).equal(0);
-      expect(second.compare(first)).equal(1);
-    });
-
     it("compares lt", () => {
       const first = Sut(new Date(2020, 1, 1));
       const second = Sut(new Date(2020, 1, 2));
@@ -68,14 +59,14 @@ describe("Mandate", () => {
       expect(second.lte(first)).equal(false);
     });
 
-    it("compares eq", () => {
+    it("compares eq loosly", () => {
       const first = Sut(new Date(2020, 1, 1, 0));
       const second = Sut(new Date(2020, 1, 1, 1));
       const third = Sut(new Date(2020, 1, 2, 0));
 
-      expect(first.eq(second)).equal(true);
-      expect(first.eq(first)).equal(true);
-      expect(first.eq(third)).equal(false);
+      expect(first.eq(second, false)).equal(true);
+      expect(first.eq(first, false)).equal(true);
+      expect(first.eq(third, false)).equal(false);
     });
 
     it("compares eq precisely", () => {
@@ -83,9 +74,9 @@ describe("Mandate", () => {
       const second = Sut(new Date(2020, 1, 1, 1));
       const third = Sut(new Date(2020, 1, 2, 0));
 
-      expect(first.eq(second, true)).equal(false);
-      expect(first.eq(first, true)).equal(true);
-      expect(first.eq(third, true)).equal(false);
+      expect(first.eq(second)).equal(false);
+      expect(first.eq(first)).equal(true);
+      expect(first.eq(third)).equal(false);
     });
 
     it("compares gt", () => {
