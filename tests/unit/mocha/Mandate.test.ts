@@ -107,6 +107,71 @@ describe("Mandate", () => {
     });
   });
 
+  describe("diff", () => {
+    it("gets diff in milleseconds", () => {
+      const before = Sut(new Date(2020, 1, 1, 1, 1, 1, 0));
+      const after = Sut(new Date(2020, 1, 1, 1, 1, 1, 1));
+
+      expect(before.diffInMilleseconds(after)).equal(1);
+      expect(before.diffInMilleseconds(after, false)).equal(-1);
+      expect(after.diffInMilleseconds(before)).equal(1);
+    });
+
+    it("gets diff in seconds", () => {
+      const before = Sut(new Date(2020, 1, 1, 1, 1, 1, 500));
+      const after = Sut(new Date(2020, 1, 1, 1, 1, 2));
+
+      expect(before.diffInSeconds(after)).equal(0.5);
+      expect(before.diffInSeconds(after, false)).equal(-0.5);
+      expect(after.diffInSeconds(before)).equal(0.5);
+    });
+
+    it("gets diff in minutes", () => {
+      const before = Sut(new Date(2020, 1, 1, 1, 1, 30));
+      const after = Sut(new Date(2020, 1, 1, 1, 2, 0));
+
+      expect(before.diffInMinutes(after)).equal(0.5);
+      expect(before.diffInMinutes(after, false)).equal(-0.5);
+      expect(after.diffInMinutes(before)).equal(0.5);
+    });
+
+    it("gets diff in hours", () => {
+      const before = Sut(new Date(2020, 1, 1, 1, 30));
+      const after = Sut(new Date(2020, 1, 1, 2, 0));
+
+      expect(before.diffInHours(after)).equal(0.5);
+      expect(before.diffInHours(after, false)).equal(-0.5);
+      expect(after.diffInHours(before)).equal(0.5);
+    });
+
+    it("gets diff in days", () => {
+      const before = Sut(new Date(2020, 1, 1, 12));
+      const after = Sut(new Date(2020, 1, 2, 0));
+
+      expect(before.diffInDays(after)).equal(0.5);
+      expect(before.diffInDays(after, false)).equal(-0.5);
+      expect(after.diffInDays(before)).equal(0.5);
+    });
+
+    it("gets diff in weeks", () => {
+      const before = Sut(new Date(2020, 1, 1, 0));
+      const after = Sut(new Date(2020, 1, 4, 12));
+
+      expect(before.diffInWeeks(after)).equal(0.5);
+      expect(before.diffInWeeks(after, false)).equal(-0.5);
+      expect(after.diffInWeeks(before)).equal(0.5);
+    });
+
+    it("gets diff in years", () => {
+      const before = Sut(new Date(2021, 0, 0, 0));
+      const after = Sut(new Date(2022, 0, 0, 0));
+
+      expect(before.diffInYears(after)).equal(1);
+      expect(before.diffInYears(after, false)).equal(-1);
+      expect(after.diffInYears(before)).equal(1);
+    });
+  });
+
   describe("format", () => {
     describe("basic format", () => {
       it("formats full year", () => {

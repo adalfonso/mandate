@@ -128,5 +128,26 @@ let first = mandate(new Date(2020, 1, 1));
 let second = mandate(new Date(2020, 1, 3));
 
 second.gte(first);
-//true
+// true
+```
+
+###### diffInYears(date: Mandate|Date|string, abs: boolean)
+###### diffInWeeks...
+###### diffInDays...
+###### diffInHours...
+###### diffInMinutes...
+###### diffInSeconds...
+###### diffInMilleseconds...
+
+Get the difference in years, weeks, days, hours, minutes, seconds, or milleseconds between two dates. The second argument determines if the result should be an absolute value and is true by default.
+
+```javascript
+let before = Sut(new Date(2021, 1, 1));
+let after = Sut(new Date(2022, 1, 1));
+
+before.diffInYears(after);
+// 1
+
+before.diffInYears(after, false);
+// -1
 ```
