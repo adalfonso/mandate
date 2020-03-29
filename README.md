@@ -66,7 +66,7 @@ Format accepts a string to convey a date using these patterns:
 let forthOfJuly = mandate("July 4, 2005 7:32 pm");
 
 forthOfjuly.format("YYYY-MM-DD HH:mm");
-// 2005-07-04 19:32
+// "2005-07-04 19:32"
 ```
 
 ##### lt(date: Mandate | Date | string): boolean
@@ -143,9 +143,9 @@ second.gte(first);
 
 ##### diffInSeconds(date: Mandate | Date | string, abs: boolean): number
 
-##### diffInMilleseconds(date: Mandate | Date | string, abs: boolean): number
+##### diffInMilliseconds(date: Mandate | Date | string, abs: boolean): number
 
-Get the difference in years, weeks, days, hours, minutes, seconds, or milleseconds between two dates. The second argument determines if the result should be an absolute value and is true by default.
+Get the difference in years, weeks, days, hours, minutes, seconds, or milliseconds between two dates. The second argument determines if the result should be an absolute value and is true by default.
 
 ```javascript
 let before = Sut(new Date(2021, 1, 1));
@@ -156,4 +156,15 @@ before.diffInYears(after);
 
 before.diffInYears(after, false);
 // -1
+```
+
+##### toUnix(): number
+##### toUnixMs(): number
+
+```javascript
+date.toUnix();
+// 1580533200
+
+date.toUnixMs();
+// 1580533200000
 ```

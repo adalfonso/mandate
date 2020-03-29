@@ -99,13 +99,13 @@ describe("Mandate", () => {
   });
 
   describe("diff", () => {
-    it("gets diff in milleseconds", () => {
+    it("gets diff in milliseconds", () => {
       const before = Sut(new Date(2020, 1, 1, 1, 1, 1, 0));
       const after = Sut(new Date(2020, 1, 1, 1, 1, 1, 1));
 
-      expect(before.diffInMilleseconds(after)).equal(1);
-      expect(before.diffInMilleseconds(after, false)).equal(-1);
-      expect(after.diffInMilleseconds(before)).equal(1);
+      expect(before.diffInMilliseconds(after)).equal(1);
+      expect(before.diffInMilliseconds(after, false)).equal(-1);
+      expect(after.diffInMilliseconds(before)).equal(1);
     });
 
     it("gets diff in seconds", () => {
@@ -296,7 +296,7 @@ describe("Mandate", () => {
     });
 
     describe("complex", () => {
-      it("formats long year and short year", () => {
+      it("long year and short year", () => {
         const sut = Sut(new Date(2020, 1, 1));
 
         expect(sut.format("YYYYYY")).equal("202020");
@@ -316,6 +316,16 @@ describe("Mandate", () => {
     });
 
     describe("common date", () => {
+      it("unix", () => {
+        let sut = Sut(new Date(2020, 1, 1));
+        expect(sut.toUnix()).equal(1580533200);
+      });
+
+      it("unix ms", () => {
+        let sut = Sut(new Date(2020, 1, 1));
+        expect(sut.toUnixMs()).equal(1580533200000);
+      });
+
       it("formats short western date (month/day/year)", () => {
         const sut = Sut(new Date(1989, 2, 8));
 

@@ -70,7 +70,7 @@ export class Mandate {
     if (typeof date === "undefined") {
       this._date = new Date();
     } else if (date instanceof Mandate) {
-      this._date = new Date(date.getUnixMs());
+      this._date = new Date(date.toUnixMs());
     } else if (typeof date === "string") {
       this._date = new Date(date);
     } else {
@@ -102,7 +102,7 @@ export class Mandate {
    * Determine if date is equal to another date
    *
    * @param date    {Datelike} Date to compare
-   * @param precise {boolean}  If comparison should be exact to the millesecond
+   * @param precise {boolean}  If comparison should be exact to the millisecond
    * @return        {boolean}  If date is equal to another date
    */
   public eq(date: Datelike, precise: boolean = true): boolean {
@@ -142,20 +142,29 @@ export class Mandate {
   /**
    * Get Unix epoch of the date
    *
-   * @return {number} The number of milleseconds since January 1, 1970 (UTC/GMT)
+   * @return {number} The number of milliseconds since January 1, 1970 (UTC/GMT)
    */
-  public getUnixMs(): number {
+  public toUnixMs(): number {
     return this._date.valueOf();
   }
 
   /**
-   * Get difference between two dates in milleseconds
+   * Get Unix epoch of the date
+   *
+   * @return {number} The number of seconds since January 1, 1970 (UTC/GMT)
+   */
+  public toUnix(): number {
+    return this._date.valueOf() / 1000;
+  }
+
+  /**
+   * Get difference between two dates in milliseconds
    *
    * @param date {Datelike} Date to compare
    * @param abs  {boolean}  If result should be the absolute value
-   * @return     {number}   Difference between two dates in milleseconds
+   * @return     {number}   Difference between two dates in milliseconds
    */
-  public diffInMilleseconds(date: Datelike, abs: boolean = true): number {
+  public diffInMilliseconds(date: Datelike, abs: boolean = true): number {
     return this._getDiff(date, abs);
   }
 
@@ -226,11 +235,11 @@ export class Mandate {
   }
 
   /**
-   * Get difference between two dates based on a millesecond modifier
+   * Get difference between two dates based on a millisecond modifier
    *
    * @param date    {Datelike} Date to compare
    * @param abs     {boolean}  If result should be the absolute value
-   * @param modifer {number} Modifier in milleseconds
+   * @param modifer {number} Modifier in milliseconds
    * @return        {number} Difference between two dates
    */
   private _getDiff(
@@ -240,7 +249,7 @@ export class Mandate {
   ): number {
     date = this._getMandate(date);
 
-    let diff = (this.getUnixMs() - date.getUnixMs()) / modifier;
+    let diff = (this.toUnixMs() - date.toUnixMs()) / modifier;
 
     return abs ? Math.abs(diff) : diff;
   }
