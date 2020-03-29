@@ -272,6 +272,24 @@ export class Mandate {
   }
 
   /**
+   * Format the date into a date string
+   *
+   * @return {string} Formatted string
+   */
+  public toDateString(): string {
+    return this.format("YYYY-MM-DD");
+  }
+
+  /**
+   * Format the date into a datetime string
+   *
+   * @return {string} Formatted string
+   */
+  public toDateTimeString(): string {
+    return this.format("YYYY-MM-DD hh:mm:ss");
+  }
+
+  /**
    * Prefix a string with a zero if a single digit
    *
    * @param  {number} A number

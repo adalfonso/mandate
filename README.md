@@ -168,3 +168,19 @@ date.toUnix();
 date.toUnixMs();
 // 1580533200000
 ```
+
+##### toDateString(): string
+Convert date to date string
+
+```javascript
+date.toDateString();
+// "2020-02-01"
+```
+
+##### toDateTimeString(): string
+Convert date to datetime string
+
+```javascript
+date.toDateTimeString();
+// "2020-02-01 12:34:56"
+```

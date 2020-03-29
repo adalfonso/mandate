@@ -316,6 +316,16 @@ describe("Mandate", () => {
     });
 
     describe("common date", () => {
+      it("date string", () => {
+        let sut = Sut(new Date(2020, 1, 1));
+        expect(sut.toDateString()).equal("2020-02-01");
+      });
+
+      it("datetime string", () => {
+        let sut = Sut(new Date(2020, 1, 1, 12, 34, 56));
+        expect(sut.toDateTimeString()).equal("2020-02-01 12:34:56");
+      });
+
       it("unix", () => {
         let sut = Sut(new Date(2020, 1, 1));
         expect(sut.toUnix()).equal(1580533200);
