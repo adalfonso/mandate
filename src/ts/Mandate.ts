@@ -1,5 +1,11 @@
+/**
+ * @type {Datelike} A date-like object used as ingress to a Mandate instance
+ */
 type Datelike = Mandate | Date | string;
 
+/**
+ * @constant {string[]} A list of months
+ */
 const months = [
   "January",
   "February",
@@ -15,6 +21,9 @@ const months = [
   "December"
 ];
 
+/**
+ * @const {object} Map of formatting functions
+ */
 const formatInputs = {
   "Y{4}": date => date.getFullYear().toString(),
 
@@ -55,16 +64,22 @@ const formatInputs = {
 
   "D{2}(?!e)": (date: Date) => Mandate.prefixZero(date.getDate()),
 
+  Do: (date: Date) => date.getDate() + Mandate.ordinalSuffix(date.getDate()),
+
   "D(?!e)": (date: Date) => date.getDate()
 };
 
+/**
+ * Creates a new Mandate instance
+ * @class
+ */
 export class Mandate {
   private _date: Date;
 
   /**
    * Create a new instance
    *
-   * @param date {Datelike} Date to compare
+   * @param {Datelike} date Date to compare
    */
   constructor(date?: Datelike) {
     if (typeof date === "undefined") {
@@ -81,8 +96,9 @@ export class Mandate {
   /**
    * Determine if date is less than another date
    *
-   * @param date {Datelike} Date to compare
-   * @return     {boolean}  If date is less than another date
+   * @param  {Datelike} date Date to compare
+   *
+   * @return {boolean}       If date is less than another date
    */
   public lt(date: Datelike): boolean {
     return this._getDiff(date, false) < 0;
@@ -91,8 +107,9 @@ export class Mandate {
   /**
    * Determine if date is less than or equal to another date
    *
-   * @param date {Datelike} Date to compare
-   * @return     {boolean}  If date is less than of equal to another date
+   * @param  {Datelike} date Date to compare
+   *
+   * @return {boolean}       If date is less than of equal to another date
    */
   public lte(date: Datelike): boolean {
     return this._getDiff(date, false) <= 0;
@@ -101,9 +118,10 @@ export class Mandate {
   /**
    * Determine if date is equal to another date
    *
-   * @param date    {Datelike} Date to compare
-   * @param precise {boolean}  If comparison should be exact to the millisecond
-   * @return        {boolean}  If date is equal to another date
+   * @param  {Datelike} date    Date to compare
+   * @param  {boolean}  precise If comparison should be exact to the millisecond
+   *
+   * @return {boolean}          If date is equal to another date
    */
   public eq(date: Datelike, precise: boolean = true): boolean {
     date = this._getMandate(date);
@@ -122,8 +140,9 @@ export class Mandate {
   /**
    * Determine if date is greater than another date
    *
-   * @param date {Datelike} Date to compare
-   * @return     {boolean}  If date is greater than another date
+   * @param  {Datelike} date Date to compare
+   *
+   * @return {boolean}       If date is greater than another date
    */
   public gt(date: Datelike): boolean {
     return this._getDiff(date, false) > 0;
@@ -132,8 +151,9 @@ export class Mandate {
   /**
    * Determine if date is greater than or equal to another date
    *
-   * @param date {Datelike} Date to compare
-   * @return     {boolean}  If date is greater than or equal to another date
+   * @param  {Datelike} date Date to compare
+   *
+   * @return {boolean}       If date is greater than or equal to another date
    */
   public gte(date: Datelike): boolean {
     return this._getDiff(date, false) >= 0;
@@ -163,7 +183,7 @@ export class Mandate {
    * @return {string} Formatted date
    */
   public toWestern(): string {
-    return this.format("MMMM D, YYYY");
+    return this.format("MMMM Do, YYYY");
   }
 
   /**
@@ -178,9 +198,10 @@ export class Mandate {
   /**
    * Get difference between two dates in milliseconds
    *
-   * @param date {Datelike} Date to compare
-   * @param abs  {boolean}  If result should be the absolute value
-   * @return     {number}   Difference between two dates in milliseconds
+   * @param  {Datelike} date Date to compare
+   * @param  {boolean}  abs  If result should be the absolute value
+   *
+   * @return {number}        Difference between two dates in milliseconds
    */
   public diffInMilliseconds(date: Datelike, abs: boolean = true): number {
     return this._getDiff(date, abs);
@@ -189,9 +210,10 @@ export class Mandate {
   /**
    * Get difference between two dates in seconds
    *
-   * @param date {Datelike} Date to compare
-   * @param abs  {boolean}  If result should be the absolute value
-   * @return     {number}   Difference between two dates in seconds
+   * @param  {Datelike} date Date to compare
+   * @param  {boolean}  abs  If result should be the absolute value
+   *
+   * @return {number}        Difference between two dates in seconds
    */
   public diffInSeconds(date: Datelike, abs: boolean = true): number {
     return this._getDiff(date, abs, 1000);
@@ -200,9 +222,10 @@ export class Mandate {
   /**
    * Get difference between two dates in minutes
    *
-   * @param date {Datelike} Date to compare
-   * @param abs  {boolean}  If result should be the absolute value
-   * @return     {number}   Difference between two dates in minutes
+   * @param  {Datelike} date Date to compare
+   * @param  {boolean}  abs  If result should be the absolute value
+   *
+   * @return {number}        Difference between two dates in minutes
    */
   public diffInMinutes(date: Datelike, abs: boolean = true): number {
     return this._getDiff(date, abs, 1000 * 60);
@@ -211,9 +234,10 @@ export class Mandate {
   /**
    * Get difference between two dates in hours
    *
-   * @param date {Datelike} Date to compare
-   * @param abs  {boolean}  If result should be the absolute value
-   * @return     {number}   Difference between two dates in hours
+   * @param  {Datelike} date Date to compare
+   * @param  {boolean}  abs  If result should be the absolute value
+   *
+   * @return {number}        Difference between two dates in hours
    */
   public diffInHours(date: Datelike, abs: boolean = true): number {
     return this._getDiff(date, abs, 1000 * 60 * 60);
@@ -222,9 +246,10 @@ export class Mandate {
   /**
    * Get difference between two dates in days
    *
-   * @param date {Datelike} Date to compare
-   * @param abs  {boolean}  If result should be the absolute value
-   * @return     {number}   Difference between two dates in days
+   * @param  {Datelike} date Date to compare
+   * @param  {boolean}  abs  If result should be the absolute value
+   *
+   * @return {number}        Difference between two dates in days
    */
   public diffInDays(date: Datelike, abs: boolean = true): number {
     return this._getDiff(date, abs, 1000 * 60 * 60 * 24);
@@ -233,9 +258,10 @@ export class Mandate {
   /**
    * Get difference between two dates in weeks
    *
-   * @param date {Datelike} Date to compare
-   * @param abs  {boolean}  If result should be the absolute value
-   * @return     {number}   Difference between two dates in weeks
+   * @param  {Datelike} date Date to compare
+   * @param  {boolean}  abs  If result should be the absolute value
+   *
+   * @return {number}        Difference between two dates in weeks
    */
   public diffInWeeks(date: Datelike, abs: boolean = true): number {
     return this._getDiff(date, abs, 1000 * 60 * 60 * 24 * 7);
@@ -244,9 +270,10 @@ export class Mandate {
   /**
    * Get difference between two dates in years
    *
-   * @param date {Datelike} Date to compare
-   * @param abs  {boolean}  If result should be the absolute value
-   * @return     {number}   Difference between two dates in years
+   * @param  {Datelike} date Date to compare
+   * @param  {boolean}  abs  If result should be the absolute value
+   *
+   * @return {number}        Difference between two dates in years
    */
   public diffInYears(date: Datelike, abs: boolean = true): number {
     return this._getDiff(date, abs, 1000 * 60 * 60 * 24 * 365);
@@ -255,10 +282,11 @@ export class Mandate {
   /**
    * Get difference between two dates based on a millisecond modifier
    *
-   * @param date    {Datelike} Date to compare
-   * @param abs     {boolean}  If result should be the absolute value
-   * @param modifer {number} Modifier in milliseconds
-   * @return        {number} Difference between two dates
+   * @param  {Datelike} date    Date to compare
+   * @param  {boolean}  abs     If result should be the absolute value
+   * @param  {number}   modifer Modifier in milliseconds
+   *
+   * @return {number}           Difference between two dates
    */
   private _getDiff(
     date: Datelike,
@@ -273,10 +301,36 @@ export class Mandate {
   }
 
   /**
+   * Get ordinal suffix for a number
+   *
+   * @param  {number} num Number to find ordinal for
+   *
+   * @return {string}     Ordinal
+   */
+  public static ordinalSuffix(num: number): string {
+    switch (
+      +num
+        .toString()
+        .split("")
+        .pop()
+    ) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
+  }
+
+  /**
    * Format the date into a string
    *
-   * @param input {string} String format
-   * @return      {string} Formatted string
+   * @param  {string} input String format
+   *
+   * @return {string}       Formatted string
    */
   public format(input: string): string {
     for (let parseInput in formatInputs) {
@@ -310,8 +364,9 @@ export class Mandate {
   /**
    * Prefix a string with a zero if a single digit
    *
-   * @param  {number} A number
-   * @return {string} Zero-prefixed number
+   * @param  {number} num A number
+   *
+   * @return {string}     Zero-prefixed number
    */
   public static prefixZero(num: number): string {
     return num < 10 ? "0" + num : num.toString();
@@ -320,8 +375,9 @@ export class Mandate {
   /**
    * Convert 24 hours to 12 hours
    *
-   * @param  {number} Hour
-   * @return {number} Converted hour
+   * @param  {number} hour Hour
+   *
+   * @return {number}      Converted hour
    */
   public static twelveHour(hour) {
     hour = hour % 12;
@@ -331,8 +387,10 @@ export class Mandate {
 
   /**
    * Helper method to ensure we have a Mandate instance
-   * @param  date {Datelike} Date to compare
-   * @return      {Mandate}  A Mandate instance
+   *
+   * @param  {Datelike} date Date to compare
+   *
+   * @return {Mandate}       A Mandate instance
    */
   private _getMandate(date: Datelike) {
     return date instanceof Mandate ? date : mandate(date);
@@ -342,8 +400,9 @@ export class Mandate {
 /**
  * Helper function to new-up a Mandate instance
  *
- * @param date {Datelike}
- * @return     {Mandate}  A Mandate instance
+ * @param  {Datelike} date Mandate basis
+ *
+ * @return {Mandate}       A Mandate instance
  */
 export default function mandate(date?: Datelike) {
   return new Mandate(date);

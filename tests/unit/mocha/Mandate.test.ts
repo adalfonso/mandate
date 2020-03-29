@@ -211,7 +211,7 @@ describe("Mandate", () => {
         });
       });
 
-      it("day", () => {
+      it("date", () => {
         [
           [new Date(2020, 4, 1), "01", "1"],
           [new Date(2020, 4, 10), "10", "10"]
@@ -220,6 +220,25 @@ describe("Mandate", () => {
 
           expect(sut.format("DD")).equal(data[1]);
           expect(sut.format("D")).equal(data[2]);
+        });
+      });
+
+      it("ordinal date", () => {
+        [
+          [1, "1st"],
+          [2, "2nd"],
+          [3, "3rd"],
+          [4, "4th"],
+          [5, "5th"],
+          [6, "6th"],
+          [7, "7th"],
+          [8, "8th"],
+          [9, "9th"],
+          [10, "10th"]
+        ].forEach((data: [number, string]) => {
+          const sut = Sut(new Date(2020, 0, data[0]));
+
+          expect(sut.format("Do")).equal(data[1]);
         });
       });
 
@@ -328,7 +347,7 @@ describe("Mandate", () => {
 
       it("western date string", () => {
         let sut = Sut(new Date(2020, 1, 1));
-        expect(sut.toWestern()).equal("February 1, 2020");
+        expect(sut.toWestern()).equal("February 1st, 2020");
       });
 
       it("european date string", () => {
