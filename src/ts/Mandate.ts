@@ -158,6 +158,24 @@ export class Mandate {
   }
 
   /**
+   * Get Western date format
+   *
+   * @return {string} Formatted date
+   */
+  public toWestern(): string {
+    return this.format("MMMM D, YYYY");
+  }
+
+  /**
+   * Get European date format
+   *
+   * @return {string} Formatted date
+   */
+  public toEuro(): string {
+    return this.format("D MMMM YYYY");
+  }
+
+  /**
    * Get difference between two dates in milliseconds
    *
    * @param date {Datelike} Date to compare

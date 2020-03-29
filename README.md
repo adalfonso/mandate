@@ -1,6 +1,6 @@
 # mandate
 
-A tiny yet performat date manipulation library.
+A tiny, yet powerful date manipulation library.
 
 #### Running tests
 
@@ -159,6 +159,7 @@ before.diffInYears(after, false);
 ```
 
 ##### toUnix(): number
+
 ##### toUnixMs(): number
 
 ```javascript
@@ -170,6 +171,7 @@ date.toUnixMs();
 ```
 
 ##### toDateString(): string
+
 Convert date to date string
 
 ```javascript
@@ -178,9 +180,28 @@ date.toDateString();
 ```
 
 ##### toDateTimeString(): string
+
 Convert date to datetime string
 
 ```javascript
 date.toDateTimeString();
 // "2020-02-01 12:34:56"
+```
+
+##### toWestern(): string
+
+Convert date to Western date format.
+
+```javascript
+date.toWestern();
+// "March 30, 1988"
+```
+
+##### toEuro(): string
+
+Convert date to European date format.
+
+```javascript
+date.toEuro();
+// "17 June 1990"
 ```

@@ -326,6 +326,16 @@ describe("Mandate", () => {
         expect(sut.toDateTimeString()).equal("2020-02-01 12:34:56");
       });
 
+      it("western date string", () => {
+        let sut = Sut(new Date(2020, 1, 1));
+        expect(sut.toWestern()).equal("February 1, 2020");
+      });
+
+      it("european date string", () => {
+        let sut = Sut(new Date(2020, 1, 1));
+        expect(sut.toEuro()).equal("1 February 2020");
+      });
+
       it("unix", () => {
         let sut = Sut(new Date(2020, 1, 1));
         expect(sut.toUnix()).equal(1580533200);
