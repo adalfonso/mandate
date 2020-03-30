@@ -58,8 +58,10 @@ Format accepts a string to convey a date using these patterns:
 | h     | 1 - 12     | 12 Hour                      |
 | mm    | 01 - 31    | Minute w/leading 0           |
 | m     | 1 - 31     | Minute                       |
-| ss    | 01 - 12    | Second month w/leading 0     |
-| s     | 1 - 12     | Second month                 |
+| ss    | 01 - 12    | Second w/leading 0           |
+| s     | 1 - 12     | Second                       |
+| SS    | 001 - 999  | Millisecond w/leading 0      |
+| S     | 1 - 999    | Millisecond                  |
 | A     | AM/PM      | Capital Ante/Post Meridiem   |
 | a     | am/pm      | Lowercase Ante/Post Meridiem |
 

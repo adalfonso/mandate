@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import Sut from "../../../src/ts/Mandate";
+import Sut, { Mandate as SutClass } from "../../../src/ts/Mandate";
 
 describe("Mandate", () => {
   describe("Create class instance", () => {
@@ -41,7 +41,7 @@ describe("Mandate", () => {
   });
 
   describe("compare", () => {
-    it("compares lt", () => {
+    it("<", () => {
       const first = Sut(new Date(2020, 1, 1));
       const second = Sut(new Date(2020, 1, 2));
 
@@ -50,7 +50,7 @@ describe("Mandate", () => {
       expect(second.lt(first)).equal(false);
     });
 
-    it("compares lte", () => {
+    it("<=", () => {
       const first = Sut(new Date(2020, 1, 1));
       const second = Sut(new Date(2020, 1, 2));
 
@@ -59,7 +59,7 @@ describe("Mandate", () => {
       expect(second.lte(first)).equal(false);
     });
 
-    it("compares eq loosly", () => {
+    it("==", () => {
       const first = Sut(new Date(2020, 1, 1, 0));
       const second = Sut(new Date(2020, 1, 1, 1));
       const third = Sut(new Date(2020, 1, 2, 0));
@@ -69,7 +69,7 @@ describe("Mandate", () => {
       expect(first.eq(third, false)).equal(false);
     });
 
-    it("compares eq precisely", () => {
+    it("===", () => {
       const first = Sut(new Date(2020, 1, 1, 0));
       const second = Sut(new Date(2020, 1, 1, 1));
       const third = Sut(new Date(2020, 1, 2, 0));
@@ -79,7 +79,7 @@ describe("Mandate", () => {
       expect(first.eq(third)).equal(false);
     });
 
-    it("compares gt", () => {
+    it(">", () => {
       const first = Sut(new Date(2020, 1, 1));
       const second = Sut(new Date(2020, 1, 2));
 
@@ -88,7 +88,7 @@ describe("Mandate", () => {
       expect(second.gt(first)).equal(true);
     });
 
-    it("compares gte", () => {
+    it(">=", () => {
       const first = Sut(new Date(2020, 1, 1));
       const second = Sut(new Date(2020, 1, 2));
 
@@ -99,7 +99,7 @@ describe("Mandate", () => {
   });
 
   describe("diff", () => {
-    it("gets diff in milliseconds", () => {
+    it("diffInMilliseconds", () => {
       const before = Sut(new Date(2020, 1, 1, 1, 1, 1, 0));
       const after = Sut(new Date(2020, 1, 1, 1, 1, 1, 1));
 
@@ -108,7 +108,7 @@ describe("Mandate", () => {
       expect(after.diffInMilliseconds(before)).equal(1);
     });
 
-    it("gets diff in seconds", () => {
+    it("diffInSeconds", () => {
       const before = Sut(new Date(2020, 1, 1, 1, 1, 1, 500));
       const after = Sut(new Date(2020, 1, 1, 1, 1, 2));
 
@@ -117,7 +117,7 @@ describe("Mandate", () => {
       expect(after.diffInSeconds(before)).equal(0.5);
     });
 
-    it("gets diff in minutes", () => {
+    it("diffInMinutes", () => {
       const before = Sut(new Date(2020, 1, 1, 1, 1, 30));
       const after = Sut(new Date(2020, 1, 1, 1, 2, 0));
 
@@ -126,7 +126,7 @@ describe("Mandate", () => {
       expect(after.diffInMinutes(before)).equal(0.5);
     });
 
-    it("gets diff in hours", () => {
+    it("diffInHours", () => {
       const before = Sut(new Date(2020, 1, 1, 1, 30));
       const after = Sut(new Date(2020, 1, 1, 2, 0));
 
@@ -135,7 +135,7 @@ describe("Mandate", () => {
       expect(after.diffInHours(before)).equal(0.5);
     });
 
-    it("gets diff in days", () => {
+    it("diffInDays", () => {
       const before = Sut(new Date(2020, 1, 1, 12));
       const after = Sut(new Date(2020, 1, 2, 0));
 
@@ -144,7 +144,7 @@ describe("Mandate", () => {
       expect(after.diffInDays(before)).equal(0.5);
     });
 
-    it("gets diff in weeks", () => {
+    it("diffInWeeks", () => {
       const before = Sut(new Date(2020, 1, 1, 0));
       const after = Sut(new Date(2020, 1, 4, 12));
 
@@ -153,7 +153,7 @@ describe("Mandate", () => {
       expect(after.diffInWeeks(before)).equal(0.5);
     });
 
-    it("gets diff in years", () => {
+    it("diffInYears", () => {
       const before = Sut(new Date(2021, 0, 0, 0));
       const after = Sut(new Date(2022, 0, 0, 0));
 
@@ -307,6 +307,19 @@ describe("Mandate", () => {
         });
       });
 
+      it("millisecond", () => {
+        [
+          [new Date(2020, 4, 8, 4, 5, 1, 5), "005", "5"],
+          [new Date(2020, 4, 8, 4, 5, 1, 40), "040", "40"],
+          [new Date(2020, 4, 8, 4, 5, 1, 666), "666", "666"]
+        ].forEach(data => {
+          const sut = Sut(data[0]);
+
+          expect(sut.format("SS")).equal(data[1]);
+          expect(sut.format("S")).equal(data[2]);
+        });
+      });
+
       it("doesn't format incorrect input", () => {
         const sut = Sut(new Date(2020, 1, 1));
 
@@ -396,6 +409,19 @@ describe("Mandate", () => {
         const sut = Sut(new Date(1989, 2, 8, 15, 45, 22));
 
         expect(sut.format("h:m:ss a")).equal("3:45:22 pm");
+      });
+    });
+  });
+
+  describe("static methods", () => {
+    it("prefixZero", () => {
+      [
+        [2, undefined, "02"],
+        [20, undefined, "20"],
+        [2, 3, "002"],
+        [20, 3, "020"]
+      ].forEach((data: [number, number, string]) => {
+        expect(SutClass.prefixZero(data[0], data[1])).equal(data[2]);
       });
     });
   });

@@ -54,6 +54,10 @@ const formatInputs = {
 
   "s{1}": (date: Date) => date.getSeconds(),
 
+  "S{2}": (date: Date) => Mandate.prefixZero(date.getMilliseconds(), 3),
+
+  "S{1}": (date: Date) => date.getMilliseconds(),
+
   "M{4}": (date: Date) => months[date.getMonth()],
 
   "M{3}": (date: Date) => months[date.getMonth()].slice(0, 3),
@@ -364,12 +368,17 @@ export class Mandate {
   /**
    * Prefix a string with a zero if a single digit
    *
-   * @param  {number} num A number
+   * @param  {number} num    A number
+   * @param  {number} length Length number should be prefixed to
    *
    * @return {string}     Zero-prefixed number
    */
-  public static prefixZero(num: number): string {
-    return num < 10 ? "0" + num : num.toString();
+  public static prefixZero(num: number, length: number = 2): string {
+    const numString = num.toString();
+
+    return numString.length < length
+      ? "0".repeat(length - numString.length) + numString
+      : numString;
   }
 
   /**
