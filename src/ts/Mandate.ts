@@ -382,6 +382,98 @@ export class Mandate {
   }
 
   /**
+   * Subtract milliseconds from the date
+   *
+   * @param  {number}  num Number of milliseconds to subtract
+   *
+   * @return {Mandate}     Class instance
+   */
+  public subMilliseconds(num: number = 1) {
+    return this._sub(num);
+  }
+
+  /**
+   * Subtract seconds from the date
+   *
+   * @param  {number}  num Number of seconds to subtract
+   *
+   * @return {Mandate}     Class instance
+   */
+  public subSeconds(num: number = 1) {
+    return this._sub(SECOND_MS * num);
+  }
+
+  /**
+   * Sub minutes from the date
+   *
+   * @param  {number}  num Number of minutes to subtract
+   *
+   * @return {Mandate}     Class instance
+   */
+  public subMinutes(num: number = 1) {
+    return this._sub(MINUTE_MS * num);
+  }
+
+  /**
+   * Sub hours from the date
+   *
+   * @param  {number}  num Number of hours to subtract
+   *
+   * @return {Mandate}     Class instance
+   */
+  public subHours(num: number = 1) {
+    return this._sub(HOUR_MS * num);
+  }
+
+  /**
+   * Subtract days from the date
+   *
+   * @param  {number}  num Number of days to subtract
+   *
+   * @return {Mandate}     Class instance
+   */
+  public subDays(num: number = 1) {
+    return this._sub(DAY_MS * num);
+  }
+
+  /**
+   * Subtract weeks from the date
+   *
+   * @param  {number}  num Number of weeks to subtract
+   *
+   * @return {Mandate}     Class instance
+   */
+  public subWeeks(num: number = 1) {
+    return this._sub(WEEK_MS * num);
+  }
+
+  /**
+   * Subtract months from the date
+   *
+   * @param  {number}  num Number of months to subtract
+   *
+   * @return {Mandate}     Modified date
+   */
+  public subMonths(num: number = 1) {
+    this._date.setMonth(this._date.getMonth() - num);
+
+    return this;
+  }
+
+  /**
+   * Subtract years from the date
+   *
+   * @param  {number}  num Number of years to subtract
+   *
+   * @return {Mandate}     Modified date
+   */
+  public subYears(num: number = 1) {
+    this._date.setFullYear(this._date.getFullYear() - num);
+
+    return this;
+  }
+
+  /**
    * Update date by adding milliseconds
    *
    * @param {number}   num Milliseconds to add
@@ -390,6 +482,19 @@ export class Mandate {
    */
   private _add(num: number = 1) {
     this._date = new Date(this.toUnixMs() + num);
+
+    return this;
+  }
+
+  /**
+   * Update date by subtracting milliseconds
+   *
+   * @param {number}   num Milliseconds to subtract
+   *
+   * @return {Mandate}     Class instance
+   */
+  private _sub(num: number = 1) {
+    this._date = new Date(this.toUnixMs() - num);
 
     return this;
   }

@@ -135,11 +135,17 @@ second.gte(first);
 ```
 
 ##### diffInMilliseconds(date: Mandate | Date | string, abs: boolean): number
+
 ##### diffInSeconds(date: Mandate | Date | string, abs: boolean): number
+
 ##### diffInMinutes(date: Mandate | Date | string, abs: boolean): number
+
 ##### diffInHours(date: Mandate | Date | string, abs: boolean): number
+
 ##### diffInDays(date: Mandate | Date | string, abs: boolean): number
+
 ##### diffInWeeks(date: Mandate | Date | string, abs: boolean): number
+
 ##### diffInYears(date: Mandate | Date | string, abs: boolean): number
 
 Get the difference in years, weeks, days, hours, minutes, seconds, or milliseconds between two dates. The second argument determines if the result should be an absolute value and is true by default.
@@ -156,12 +162,19 @@ before.diffInYears(after, false);
 ```
 
 ##### addMilliseconds(num: number): Mandate
+
 ##### addSeconds(num: number): Mandate
+
 ##### addMinutes(num: number): Mandate
+
 ##### addDays(num: number): Mandate
+
 ##### addHours(num: number): Mandate
+
 ##### addWeeks(num: number): Mandate
+
 ##### addMonths(num: number): Mandate
+
 ##### addYears(num: number): Mandate
 
 Add years, months, weeks, days, hours, minutes, secconds, or milliseconds to a date. Inputs must be whole numbers and are defaulted to `1`.
@@ -169,13 +182,44 @@ Add years, months, weeks, days, hours, minutes, secconds, or milliseconds to a d
 ```javascript
 let date = Sut(new Date(2020, 1, 1));
 
-date.addYears(4).addMonths().addSeconds(30);
+date
+  .addYears(4)
+  .addMonths()
+  .addSeconds(30);
 
-data.format("YYYY-MM-DD HH:mm:ss:SS")
+date.format("YYYY-MM-DD HH:mm:ss:SS");
 // 2024-03-01 00:00:30:000
 ```
 
+##### subMilliseconds(num: number): Mandate
+
+##### subSeconds(num: number): Mandate
+
+##### subMinutes(num: number): Mandate
+
+##### subDays(num: number): Mandate
+
+##### subHours(num: number): Mandate
+
+##### subWeeks(num: number): Mandate
+
+##### subMonths(num: number): Mandate
+
+##### subYears(num: number): Mandate
+
+Subtract years, months, weeks, days, hours, minutes, secconds, or milliseconds from a date. Inputs must be whole numbers and are defaulted to `1`.
+
+```javascript
+let date = Sut(new Date(2020, 0, 2));
+
+date.subYears(2).subMilliseconds();
+
+date.format("YYYY-MM-DD HH:mm:ss:SS");
+// 2018-01-01 23:59:59:999
+```
+
 ##### toUnix(): number
+
 ##### toUnixMs(): number
 
 ```javascript

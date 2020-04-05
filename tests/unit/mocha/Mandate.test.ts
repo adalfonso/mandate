@@ -2,6 +2,8 @@ import { expect } from "chai";
 import Sut, { Mandate as SutClass } from "../../../src/ts/Mandate";
 
 describe("Mandate", () => {
+  const FORMAT_MS = "YYYY-MM-DD HH:mm:ss:SS";
+
   describe("Create class instance", () => {
     it("creates a new instance", () => {
       const sut = Sut(new Date());
@@ -414,8 +416,6 @@ describe("Mandate", () => {
   });
 
   describe("add", () => {
-    const FORMAT_MS = "YYYY-MM-DD HH:mm:ss:SS";
-
     it("addMilliseconds", () => {
       [
         [new Date(2020, 0, 1, 0, 0, 0), undefined, "2020-01-01 00:00:00:001"],
@@ -539,6 +539,134 @@ describe("Mandate", () => {
         let sut = Sut(data[0]);
 
         expect(sut.addYears(data[1]).format(FORMAT_MS)).equal(data[2]);
+      });
+    });
+  });
+
+  describe("sub", () => {
+    it("subMilliseconds", () => {
+      [
+        [new Date(2020, 0, 1, 0, 0, 1), undefined, "2020-01-01 00:00:00:999"],
+        [new Date(2020, 0, 1, 0, 0, 2), 1, "2020-01-01 00:00:01:999"],
+        [new Date(2020, 0, 1, 0, 0, 4), 1001, "2020-01-01 00:00:02:999"],
+        [new Date(2020, 0, 1, 0, 1, 4), 60001, "2020-01-01 00:00:03:999"],
+        [new Date(2020, 0, 1, 1, 0, 5), 3600001, "2020-01-01 00:00:04:999"],
+        [new Date(2020, 0, 2, 0, 0, 6), 86400001, "2020-01-01 00:00:05:999"],
+        [new Date(2020, 1, 1, 0, 0, 7), 2678400001, "2020-01-01 00:00:06:999"],
+        [new Date(2021, 0, 1, 0, 0, 8), 31622400001, "2020-01-01 00:00:07:999"],
+        [new Date(2022, 0, 1, 0, 0, 9), 63244800001, "2019-12-31 00:00:08:999"]
+      ].forEach((data: [Date, number, string]) => {
+        let sut = Sut(data[0]);
+
+        expect(sut.subMilliseconds(data[1]).format(FORMAT_MS)).equal(data[2]);
+      });
+    });
+
+    it("subSeconds", () => {
+      [
+        [new Date(2020, 0, 1, 0, 0, 1), undefined, "2020-01-01 00:00:00:000"],
+        [new Date(2020, 0, 1, 0, 0, 2), 1, "2020-01-01 00:00:01:000"],
+        [new Date(2020, 0, 1, 0, 1, 3), 61, "2020-01-01 00:00:02:000"],
+        [new Date(2020, 0, 1, 1, 0, 4), 3601, "2020-01-01 00:00:03:000"],
+        [new Date(2020, 0, 2, 0, 0, 5), 86401, "2020-01-01 00:00:04:000"],
+        [new Date(2020, 1, 1, 0, 0, 6), 2678401, "2020-01-01 00:00:05:000"],
+        [new Date(2021, 0, 1, 0, 0, 7), 31622401, "2020-01-01 00:00:06:000"],
+        [new Date(2022, 0, 1, 0, 0, 8), 63244801, "2019-12-31 00:00:07:000"]
+      ].forEach((data: [Date, number, string]) => {
+        let sut = Sut(data[0]);
+
+        expect(sut.subSeconds(data[1]).format(FORMAT_MS)).equal(data[2]);
+      });
+    });
+
+    it("subMinutes", () => {
+      [
+        [new Date(2020, 0, 1, 0, 1, 0), undefined, "2020-01-01 00:00:00:000"],
+        [new Date(2020, 0, 1, 0, 2, 0), 1, "2020-01-01 00:01:00:000"],
+        [new Date(2020, 0, 1, 1, 3, 0), 61, "2020-01-01 00:02:00:000"],
+        [new Date(2020, 0, 2, 0, 4, 0), 1441, "2020-01-01 00:03:00:000"],
+        [new Date(2020, 1, 1, 0, 5, 0), 44641, "2020-01-01 00:04:00:000"],
+        [new Date(2021, 0, 1, 0, 6, 0), 527041, "2020-01-01 00:05:00:000"],
+        [new Date(2022, 0, 1, 0, 7, 0), 1054081, "2019-12-31 00:06:00:000"]
+      ].forEach((data: [Date, number, string]) => {
+        let sut = Sut(data[0]);
+
+        expect(sut.subMinutes(data[1]).format(FORMAT_MS)).equal(data[2]);
+      });
+    });
+
+    it("subHours", () => {
+      [
+        [new Date(2020, 0, 1, 1, 0, 0), undefined, "2020-01-01 00:00:00:000"],
+        [new Date(2020, 0, 1, 2, 0, 0), 1, "2020-01-01 01:00:00:000"],
+        [new Date(2020, 0, 2, 3, 0, 0), 25, "2020-01-01 02:00:00:000"],
+        [new Date(2020, 1, 1, 4, 0, 0), 745, "2020-01-01 03:00:00:000"],
+        [new Date(2021, 0, 1, 5, 0, 0), 8785, "2020-01-01 04:00:00:000"],
+        [new Date(2022, 0, 1, 6, 0, 0), 17569, "2019-12-31 05:00:00:000"]
+      ].forEach((data: [Date, number, string]) => {
+        let sut = Sut(data[0]);
+
+        expect(sut.subHours(data[1]).format(FORMAT_MS)).equal(data[2]);
+      });
+    });
+
+    it("subDays", () => {
+      [
+        [new Date(2020, 0, 2, 0, 0, 0), undefined, "2020-01-01 00:00:00:000"],
+        [new Date(2020, 0, 3, 0, 0, 0), 1, "2020-01-02 00:00:00:000"],
+        [new Date(2020, 1, 4, 0, 0, 0), 31, "2020-01-04 00:00:00:000"],
+        [new Date(2021, 0, 5, 0, 0, 0), 366, "2020-01-05 00:00:00:000"],
+        [new Date(2024, 0, 6, 0, 0, 0), 732, "2022-01-04 00:00:00:000"]
+      ].forEach((data: [Date, number, string]) => {
+        let sut = Sut(data[0]);
+
+        expect(sut.subDays(data[1]).format(FORMAT_MS)).equal(data[2]);
+      });
+    });
+
+    it("subWeeks", () => {
+      [
+        [new Date(2021, 0, 8, 0, 0, 0), undefined, "2021-01-01 00:00:00:000"],
+        [new Date(2022, 0, 8, 0, 0, 0), 1, "2022-01-01 00:00:00:000"],
+        [new Date(2023, 0, 8, 0, 0, 0), 5, "2022-12-04 00:00:00:000"],
+        [new Date(2025, 0, 1, 0, 0, 0), 52, "2024-01-03 00:00:00:000"],
+        [new Date(2027, 0, 8, 0, 0, 0), 53, "2026-01-02 00:00:00:000"],
+        [new Date(2029, 0, 8, 0, 0, 0), 105, "2027-01-04 00:00:00:000"]
+      ].forEach((data: [Date, number, string]) => {
+        let sut = Sut(data[0]);
+
+        expect(sut.subWeeks(data[1]).format(FORMAT_MS)).equal(data[2]);
+      });
+    });
+
+    it("subMonths", () => {
+      [
+        [new Date(2020, 1, 1, 0, 0, 0), undefined, "2020-01-01 00:00:00:000"],
+        [new Date(2020, 1, 1, 0, 0, 0), 1, "2020-01-01 00:00:00:000"],
+        [new Date(2020, 2, 31, 0, 0, 0), 1, "2020-03-02 00:00:00:000"],
+        [new Date(2021, 2, 31, 0, 0, 0), 1, "2021-03-03 00:00:00:000"],
+        [new Date(2021, 0, 1, 0, 0, 0), 12, "2020-01-01 00:00:00:000"],
+        [new Date(2021, 2, 31, 0, 0, 0), 13, "2020-03-02 00:00:00:000"],
+        [new Date(2022, 0, 1, 0, 0, 0), 24, "2020-01-01 00:00:00:000"]
+      ].forEach((data: [Date, number, string]) => {
+        let sut = Sut(data[0]);
+
+        expect(sut.subMonths(data[1]).format(FORMAT_MS)).equal(data[2]);
+      });
+    });
+
+    it("subYears", () => {
+      [
+        [new Date(2021, 0, 1, 0, 0, 0), undefined, "2020-01-01 00:00:00:000"],
+        [new Date(2021, 0, 1, 0, 0, 0), 1, "2020-01-01 00:00:00:000"],
+        [new Date(2021, 0, 31, 0, 0, 0), 1, "2020-01-31 00:00:00:000"],
+        [new Date(2020, 1, 29, 0, 0, 0), 1, "2019-03-01 00:00:00:000"],
+        [new Date(2022, 1, 29, 0, 0, 0), 2, "2020-03-01 00:00:00:000"],
+        [new Date(2020, 1, 29, 0, 0, 0), 4, "2016-02-29 00:00:00:000"]
+      ].forEach((data: [Date, number, string]) => {
+        let sut = Sut(data[0]);
+
+        expect(sut.subYears(data[1]).format(FORMAT_MS)).equal(data[2]);
       });
     });
   });
