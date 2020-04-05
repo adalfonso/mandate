@@ -134,19 +134,13 @@ second.gte(first);
 // true
 ```
 
-##### diffInYears(date: Mandate | Date | string, abs: boolean): number
-
-##### diffInWeeks(date: Mandate | Date | string, abs: boolean): number
-
-##### diffInDays(date: Mandate | Date | string, abs: boolean): number
-
-##### diffInHours(date: Mandate | Date | string, abs: boolean): number
-
-##### diffInMinutes(date: Mandate | Date | string, abs: boolean): number
-
-##### diffInSeconds(date: Mandate | Date | string, abs: boolean): number
-
 ##### diffInMilliseconds(date: Mandate | Date | string, abs: boolean): number
+##### diffInSeconds(date: Mandate | Date | string, abs: boolean): number
+##### diffInMinutes(date: Mandate | Date | string, abs: boolean): number
+##### diffInHours(date: Mandate | Date | string, abs: boolean): number
+##### diffInDays(date: Mandate | Date | string, abs: boolean): number
+##### diffInWeeks(date: Mandate | Date | string, abs: boolean): number
+##### diffInYears(date: Mandate | Date | string, abs: boolean): number
 
 Get the difference in years, weeks, days, hours, minutes, seconds, or milliseconds between two dates. The second argument determines if the result should be an absolute value and is true by default.
 
@@ -161,8 +155,27 @@ before.diffInYears(after, false);
 // -1
 ```
 
-##### toUnix(): number
+##### addMilliseconds(num: number): Mandate
+##### addSeconds(num: number): Mandate
+##### addMinutes(num: number): Mandate
+##### addDays(num: number): Mandate
+##### addHours(num: number): Mandate
+##### addWeeks(num: number): Mandate
+##### addMonths(num: number): Mandate
+##### addYears(num: number): Mandate
 
+Add years, months, weeks, days, hours, minutes, secconds, or milliseconds to a date. Inputs must be whole numbers and are defaulted to `1`.
+
+```javascript
+let date = Sut(new Date(2020, 1, 1));
+
+date.addYears(4).addMonths().addSeconds(30);
+
+data.format("YYYY-MM-DD HH:mm:ss:SS")
+// 2024-03-01 00:00:30:000
+```
+
+##### toUnix(): number
 ##### toUnixMs(): number
 
 ```javascript

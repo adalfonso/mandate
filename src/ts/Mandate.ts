@@ -73,6 +73,12 @@ const formatInputs = {
   "D(?!e)": (date: Date) => date.getDate()
 };
 
+const SECOND_MS = 1e3;
+const MINUTE_MS = SECOND_MS * 60;
+const HOUR_MS = MINUTE_MS * 60;
+const DAY_MS = HOUR_MS * 24;
+const WEEK_MS = DAY_MS * 7;
+
 /**
  * Creates a new Mandate instance
  * @class
@@ -220,7 +226,7 @@ export class Mandate {
    * @return {number}        Difference between two dates in seconds
    */
   public diffInSeconds(date: Datelike, abs: boolean = true): number {
-    return this._getDiff(date, abs, 1000);
+    return this._getDiff(date, abs, SECOND_MS);
   }
 
   /**
@@ -232,7 +238,7 @@ export class Mandate {
    * @return {number}        Difference between two dates in minutes
    */
   public diffInMinutes(date: Datelike, abs: boolean = true): number {
-    return this._getDiff(date, abs, 1000 * 60);
+    return this._getDiff(date, abs, MINUTE_MS);
   }
 
   /**
@@ -244,7 +250,7 @@ export class Mandate {
    * @return {number}        Difference between two dates in hours
    */
   public diffInHours(date: Datelike, abs: boolean = true): number {
-    return this._getDiff(date, abs, 1000 * 60 * 60);
+    return this._getDiff(date, abs, HOUR_MS);
   }
 
   /**
@@ -256,7 +262,7 @@ export class Mandate {
    * @return {number}        Difference between two dates in days
    */
   public diffInDays(date: Datelike, abs: boolean = true): number {
-    return this._getDiff(date, abs, 1000 * 60 * 60 * 24);
+    return this._getDiff(date, abs, DAY_MS);
   }
 
   /**
@@ -268,7 +274,7 @@ export class Mandate {
    * @return {number}        Difference between two dates in weeks
    */
   public diffInWeeks(date: Datelike, abs: boolean = true): number {
-    return this._getDiff(date, abs, 1000 * 60 * 60 * 24 * 7);
+    return this._getDiff(date, abs, WEEK_MS);
   }
 
   /**
@@ -280,7 +286,112 @@ export class Mandate {
    * @return {number}        Difference between two dates in years
    */
   public diffInYears(date: Datelike, abs: boolean = true): number {
-    return this._getDiff(date, abs, 1000 * 60 * 60 * 24 * 365);
+    return this._getDiff(date, abs, DAY_MS * 365);
+  }
+
+  /**
+   * Add milliseconds to the date
+   *
+   * @param  {number}  num Number of milliseconds to add
+   *
+   * @return {Mandate}     Class instance
+   */
+  public addMilliseconds(num: number = 1) {
+    return this._add(num);
+  }
+
+  /**
+   * Add seconds to the date
+   *
+   * @param  {number}  num Number of seconds to add
+   *
+   * @return {Mandate}     Class instance
+   */
+  public addSeconds(num: number = 1) {
+    return this._add(SECOND_MS * num);
+  }
+
+  /**
+   * Add minutes to the date
+   *
+   * @param  {number}  num Number of minutes to add
+   *
+   * @return {Mandate}     Class instance
+   */
+  public addMinutes(num: number = 1) {
+    return this._add(MINUTE_MS * num);
+  }
+
+  /**
+   * Add hours to the date
+   *
+   * @param  {number}  num Number of hours to add
+   *
+   * @return {Mandate}     Class instance
+   */
+  public addHours(num: number = 1) {
+    return this._add(HOUR_MS * num);
+  }
+
+  /**
+   * Add days to the date
+   *
+   * @param  {number}  num Number of days to add
+   *
+   * @return {Mandate}     Class instance
+   */
+  public addDays(num: number = 1) {
+    return this._add(DAY_MS * num);
+  }
+
+  /**
+   * Add weeks to the date
+   *
+   * @param  {number}  num Number of weeks to add
+   *
+   * @return {Mandate}     Class instance
+   */
+  public addWeeks(num: number = 1) {
+    return this._add(WEEK_MS * num);
+  }
+
+  /**
+   * Add months to the date
+   *
+   * @param  {number}  num Number of months to add
+   *
+   * @return {Mandate}     Modified date
+   */
+  public addMonths(num: number = 1) {
+    this._date.setMonth(this._date.getMonth() + num);
+
+    return this;
+  }
+
+  /**
+   * Add years to the date
+   *
+   * @param  {number}  num Number of years to add
+   *
+   * @return {Mandate}     Modified date
+   */
+  public addYears(num: number = 1) {
+    this._date.setFullYear(this._date.getFullYear() + num);
+
+    return this;
+  }
+
+  /**
+   * Update date by adding milliseconds
+   *
+   * @param {number}   num Milliseconds to add
+   *
+   * @return {Mandate}     Class instance
+   */
+  private _add(num: number = 1) {
+    this._date = new Date(this.toUnixMs() + num);
+
+    return this;
   }
 
   /**
