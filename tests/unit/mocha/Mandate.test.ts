@@ -671,6 +671,41 @@ describe("Mandate", () => {
     });
   });
 
+  describe("miscellaneous", () => {
+    it("isWeekend", () => {
+      [
+        [new Date(2020, 3, 5), true],
+        [new Date(2020, 3, 6), false]
+      ].forEach((data: [Date, boolean]) => {
+        let sut = Sut(data[0]);
+
+        expect(sut.isWeekend()).equal(data[1]);
+      });
+    });
+
+    it("isWeekday", () => {
+      [
+        [new Date(2020, 3, 7), true],
+        [new Date(2020, 3, 11), false]
+      ].forEach((data: [Date, boolean]) => {
+        let sut = Sut(data[0]);
+
+        expect(sut.isWeekday()).equal(data[1]);
+      });
+    });
+
+    it("isLeapYear", () => {
+      [
+        [new Date(2020, 0, 1), true],
+        [new Date(2021, 0, 1), false]
+      ].forEach((data: [Date, boolean]) => {
+        let sut = Sut(data[0]);
+
+        expect(sut.isLeapYear()).equal(data[1]);
+      });
+    });
+  });
+
   describe("static methods", () => {
     it("prefixZero", () => {
       [

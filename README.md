@@ -34,7 +34,7 @@ let then = mandate('January 1, 2020'));
 
 // or
 
-let wayback = mandate(Date(1990, 5, 18));
+let wayback = mandate("1990-06-18");
 ```
 
 ##### format(format: string): string
@@ -115,8 +115,8 @@ first.eq(oneHourLater, false);
 Compare if a date is greater than another date
 
 ```javascript
-let first = mandate(new Date(2020, 1, 1));
-let second = mandate(new Date(2020, 1, 3));
+let first = mandate("2020-01-01");
+let second = mandate("2020-01-03");
 
 first.gt(second);
 // false
@@ -127,8 +127,8 @@ first.gt(second);
 Compare if a date is greater than or equal to another date
 
 ```javascript
-let first = mandate(new Date(2020, 1, 1));
-let second = mandate(new Date(2020, 1, 3));
+let first = mandate("2020-01-01");
+let second = mandate("2020-01-03");
 
 second.gte(first);
 // true
@@ -151,8 +151,8 @@ second.gte(first);
 Get the difference in years, weeks, days, hours, minutes, seconds, or milliseconds between two dates. The second argument determines if the result should be an absolute value and is true by default.
 
 ```javascript
-let before = Sut(new Date(2021, 1, 1));
-let after = Sut(new Date(2022, 1, 1));
+let before = mandate("2021-01-01");
+let after = mandate("2022-01-01");
 
 before.diffInYears(after);
 // 1
@@ -180,7 +180,7 @@ before.diffInYears(after, false);
 Add years, months, weeks, days, hours, minutes, secconds, or milliseconds to a date. Inputs must be whole numbers and are defaulted to `1`.
 
 ```javascript
-let date = Sut(new Date(2020, 1, 1));
+let date = mandate("2020-02-01");
 
 date
   .addYears(4)
@@ -210,7 +210,7 @@ date.format("YYYY-MM-DD HH:mm:ss:SS");
 Subtract years, months, weeks, days, hours, minutes, secconds, or milliseconds from a date. Inputs must be whole numbers and are defaulted to `1`.
 
 ```javascript
-let date = Sut(new Date(2020, 0, 2));
+let date = mandate("2020-01-02");
 
 date.subYears(2).subMilliseconds();
 
@@ -264,4 +264,29 @@ Convert date to European date format.
 ```javascript
 date.toEuro();
 // "17 June 1990"
+```
+
+##### isWeekend(): boolean
+
+Date falls on weekend.
+
+##### isWeekday(): boolean
+
+Date is during the week.
+
+##### isLeapYear(): boolean
+
+Date is during a leap year.
+
+```javascript
+let date = Sut("2020-04-05");
+
+date.isWeekday();
+// true
+
+date.isWeekend();
+// false
+
+date.isLeapYear();
+// true
 ```

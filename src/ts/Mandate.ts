@@ -4,9 +4,9 @@
 type Datelike = Mandate | Date | string;
 
 /**
- * @constant {string[]} A list of months
+ * @constant {string[]} MONTHS A list of months
  */
-const months = [
+const MONTHS = [
   "January",
   "February",
   "March",
@@ -22,12 +22,37 @@ const months = [
 ];
 
 /**
- * @const {object} Map of formatting functions
+ * @constant {number} SECOND_MS Number of milliseconds in a second
  */
-const formatInputs = {
-  "Y{4}": date => date.getFullYear().toString(),
+const SECOND_MS = 1e3;
 
-  "Y{2}": date =>
+/**
+ * @constant {number} SECOND_MS Number of milliseconds in a minutes
+ */
+const MINUTE_MS = SECOND_MS * 60;
+
+/**
+ * @constant {number} MINUTE_MS Number of milliseconds in a hour
+ */
+const HOUR_MS = MINUTE_MS * 60;
+
+/**
+ * @constant {number} HOUR_MS Number of milliseconds in a day
+ */
+const DAY_MS = HOUR_MS * 24;
+
+/**
+ * @constant {number} DAY_MS Number of milliseconds in a week
+ */
+const WEEK_MS = DAY_MS * 7;
+
+/**
+ * @const {object} FORMAT_INPUTS Map of formatting functions
+ */
+const FORMAT_INPUTS = {
+  "Y{4}": (date: Date) => date.getFullYear().toString(),
+
+  "Y{2}": (date: Date) =>
     date
       .getFullYear()
       .toString()
@@ -58,9 +83,9 @@ const formatInputs = {
 
   "S{1}": (date: Date) => date.getMilliseconds(),
 
-  "M{4}": (date: Date) => months[date.getMonth()],
+  "M{4}": (date: Date) => MONTHS[date.getMonth()],
 
-  "M{3}": (date: Date) => months[date.getMonth()].slice(0, 3),
+  "M{3}": (date: Date) => MONTHS[date.getMonth()].slice(0, 3),
 
   "M{2}(?!a)": (date: Date) => Mandate.prefixZero(date.getMonth() + 1),
 
@@ -72,12 +97,6 @@ const formatInputs = {
 
   "D(?!e)": (date: Date) => date.getDate()
 };
-
-const SECOND_MS = 1e3;
-const MINUTE_MS = SECOND_MS * 60;
-const HOUR_MS = MINUTE_MS * 60;
-const DAY_MS = HOUR_MS * 24;
-const WEEK_MS = DAY_MS * 7;
 
 /**
  * Creates a new Mandate instance
@@ -296,7 +315,7 @@ export class Mandate {
    *
    * @return {Mandate}     Class instance
    */
-  public addMilliseconds(num: number = 1) {
+  public addMilliseconds(num: number = 1): Mandate {
     return this._add(num);
   }
 
@@ -307,7 +326,7 @@ export class Mandate {
    *
    * @return {Mandate}     Class instance
    */
-  public addSeconds(num: number = 1) {
+  public addSeconds(num: number = 1): Mandate {
     return this._add(SECOND_MS * num);
   }
 
@@ -318,7 +337,7 @@ export class Mandate {
    *
    * @return {Mandate}     Class instance
    */
-  public addMinutes(num: number = 1) {
+  public addMinutes(num: number = 1): Mandate {
     return this._add(MINUTE_MS * num);
   }
 
@@ -329,7 +348,7 @@ export class Mandate {
    *
    * @return {Mandate}     Class instance
    */
-  public addHours(num: number = 1) {
+  public addHours(num: number = 1): Mandate {
     return this._add(HOUR_MS * num);
   }
 
@@ -340,7 +359,7 @@ export class Mandate {
    *
    * @return {Mandate}     Class instance
    */
-  public addDays(num: number = 1) {
+  public addDays(num: number = 1): Mandate {
     return this._add(DAY_MS * num);
   }
 
@@ -351,7 +370,7 @@ export class Mandate {
    *
    * @return {Mandate}     Class instance
    */
-  public addWeeks(num: number = 1) {
+  public addWeeks(num: number = 1): Mandate {
     return this._add(WEEK_MS * num);
   }
 
@@ -362,7 +381,7 @@ export class Mandate {
    *
    * @return {Mandate}     Modified date
    */
-  public addMonths(num: number = 1) {
+  public addMonths(num: number = 1): Mandate {
     this._date.setMonth(this._date.getMonth() + num);
 
     return this;
@@ -375,7 +394,7 @@ export class Mandate {
    *
    * @return {Mandate}     Modified date
    */
-  public addYears(num: number = 1) {
+  public addYears(num: number = 1): Mandate {
     this._date.setFullYear(this._date.getFullYear() + num);
 
     return this;
@@ -388,7 +407,7 @@ export class Mandate {
    *
    * @return {Mandate}     Class instance
    */
-  public subMilliseconds(num: number = 1) {
+  public subMilliseconds(num: number = 1): Mandate {
     return this._sub(num);
   }
 
@@ -399,7 +418,7 @@ export class Mandate {
    *
    * @return {Mandate}     Class instance
    */
-  public subSeconds(num: number = 1) {
+  public subSeconds(num: number = 1): Mandate {
     return this._sub(SECOND_MS * num);
   }
 
@@ -410,7 +429,7 @@ export class Mandate {
    *
    * @return {Mandate}     Class instance
    */
-  public subMinutes(num: number = 1) {
+  public subMinutes(num: number = 1): Mandate {
     return this._sub(MINUTE_MS * num);
   }
 
@@ -421,7 +440,7 @@ export class Mandate {
    *
    * @return {Mandate}     Class instance
    */
-  public subHours(num: number = 1) {
+  public subHours(num: number = 1): Mandate {
     return this._sub(HOUR_MS * num);
   }
 
@@ -432,7 +451,7 @@ export class Mandate {
    *
    * @return {Mandate}     Class instance
    */
-  public subDays(num: number = 1) {
+  public subDays(num: number = 1): Mandate {
     return this._sub(DAY_MS * num);
   }
 
@@ -443,7 +462,7 @@ export class Mandate {
    *
    * @return {Mandate}     Class instance
    */
-  public subWeeks(num: number = 1) {
+  public subWeeks(num: number = 1): Mandate {
     return this._sub(WEEK_MS * num);
   }
 
@@ -454,7 +473,7 @@ export class Mandate {
    *
    * @return {Mandate}     Modified date
    */
-  public subMonths(num: number = 1) {
+  public subMonths(num: number = 1): Mandate {
     this._date.setMonth(this._date.getMonth() - num);
 
     return this;
@@ -467,57 +486,73 @@ export class Mandate {
    *
    * @return {Mandate}     Modified date
    */
-  public subYears(num: number = 1) {
+  public subYears(num: number = 1): Mandate {
     this._date.setFullYear(this._date.getFullYear() - num);
 
     return this;
   }
 
   /**
-   * Update date by adding milliseconds
+   * Format the date into a string
    *
-   * @param {number}   num Milliseconds to add
+   * @param  {string} input String format
    *
-   * @return {Mandate}     Class instance
+   * @return {string}       Formatted string
    */
-  private _add(num: number = 1) {
-    this._date = new Date(this.toUnixMs() + num);
+  public format(input: string): string {
+    for (let parseInput in FORMAT_INPUTS) {
+      let regex = new RegExp(parseInput, "g");
+      let closure = FORMAT_INPUTS[parseInput];
 
-    return this;
+      input = input.replace(regex, closure(this._date));
+    }
+
+    return input;
   }
 
   /**
-   * Update date by subtracting milliseconds
+   * Determine if date is a weekend
    *
-   * @param {number}   num Milliseconds to subtract
-   *
-   * @return {Mandate}     Class instance
+   * @return {boolean} If date is a weekend
    */
-  private _sub(num: number = 1) {
-    this._date = new Date(this.toUnixMs() - num);
-
-    return this;
+  public isWeekend(): boolean {
+    return [0, 6].includes(this._date.getDay());
   }
 
   /**
-   * Get difference between two dates based on a millisecond modifier
+   * Determine if date is a weekday
    *
-   * @param  {Datelike} date    Date to compare
-   * @param  {boolean}  abs     If result should be the absolute value
-   * @param  {number}   modifer Modifier in milliseconds
-   *
-   * @return {number}           Difference between two dates
+   * @return {boolean} If date is a weekday
    */
-  private _getDiff(
-    date: Datelike,
-    abs: boolean = true,
-    modifier: number = 1
-  ): number {
-    date = this._getMandate(date);
+  public isWeekday(): boolean {
+    return !this.isWeekend();
+  }
 
-    let diff = (this.toUnixMs() - date.toUnixMs()) / modifier;
+  /**
+   * Determine if date is in a leap year
+   *
+   * @return {boolean} If date is in a leap year
+   */
+  public isLeapYear(): boolean {
+    return this._date.getFullYear() % 4 === 0;
+  }
 
-    return abs ? Math.abs(diff) : diff;
+  /**
+   * Format the date into a date string
+   *
+   * @return {string} Formatted string
+   */
+  public toDateString(): string {
+    return this.format("YYYY-MM-DD");
+  }
+
+  /**
+   * Format the date into a datetime string
+   *
+   * @return {string} Formatted string
+   */
+  public toDateTimeString(): string {
+    return this.format("YYYY-MM-DD hh:mm:ss");
   }
 
   /**
@@ -546,42 +581,6 @@ export class Mandate {
   }
 
   /**
-   * Format the date into a string
-   *
-   * @param  {string} input String format
-   *
-   * @return {string}       Formatted string
-   */
-  public format(input: string): string {
-    for (let parseInput in formatInputs) {
-      let regex = new RegExp(parseInput, "g");
-      let closure = formatInputs[parseInput];
-
-      input = input.replace(regex, closure(this._date));
-    }
-
-    return input;
-  }
-
-  /**
-   * Format the date into a date string
-   *
-   * @return {string} Formatted string
-   */
-  public toDateString(): string {
-    return this.format("YYYY-MM-DD");
-  }
-
-  /**
-   * Format the date into a datetime string
-   *
-   * @return {string} Formatted string
-   */
-  public toDateTimeString(): string {
-    return this.format("YYYY-MM-DD hh:mm:ss");
-  }
-
-  /**
    * Prefix a string with a zero if a single digit
    *
    * @param  {number} num    A number
@@ -604,10 +603,44 @@ export class Mandate {
    *
    * @return {number}      Converted hour
    */
-  public static twelveHour(hour) {
+  public static twelveHour(hour): number {
     hour = hour % 12;
 
     return hour === 0 ? 12 : hour;
+  }
+
+  /**
+   * Update date by adding milliseconds
+   *
+   * @param {number}   num Milliseconds to add
+   *
+   * @return {Mandate}     Class instance
+   */
+  private _add(num: number = 1): Mandate {
+    this._date = new Date(this.toUnixMs() + num);
+
+    return this;
+  }
+
+  /**
+   * Get difference between two dates based on a millisecond modifier
+   *
+   * @param  {Datelike} date    Date to compare
+   * @param  {boolean}  abs     If result should be the absolute value
+   * @param  {number}   modifer Modifier in milliseconds
+   *
+   * @return {number}           Difference between two dates
+   */
+  private _getDiff(
+    date: Datelike,
+    abs: boolean = true,
+    modifier: number = 1
+  ): number {
+    date = this._getMandate(date);
+
+    let diff = (this.toUnixMs() - date.toUnixMs()) / modifier;
+
+    return abs ? Math.abs(diff) : diff;
   }
 
   /**
@@ -617,8 +650,21 @@ export class Mandate {
    *
    * @return {Mandate}       A Mandate instance
    */
-  private _getMandate(date: Datelike) {
+  private _getMandate(date: Datelike): Mandate {
     return date instanceof Mandate ? date : mandate(date);
+  }
+
+  /**
+   * Update date by subtracting milliseconds
+   *
+   * @param {number}   num Milliseconds to subtract
+   *
+   * @return {Mandate}     Class instance
+   */
+  private _sub(num: number = 1): Mandate {
+    this._date = new Date(this.toUnixMs() - num);
+
+    return this;
   }
 }
 
