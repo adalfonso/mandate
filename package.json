@@ -1,6 +1,6 @@
 {
   "name": "mandate",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "A tiny, yet powerful date manipulation library",
   "main": "webpack.config.js",
   "scripts": {
@@ -14,17 +14,17 @@
   "author": "",
   "license": "BSD",
   "devDependencies": {
-    "@babel/core": "^7.4.5",
-    "@babel/preset-env": "^7.4.5",
-    "@types/chai": "^4.2.6",
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@types/chai": "^4.2.11",
     "@types/mocha": "^5.2.7",
-    "babel-loader": "^8.0.6",
+    "babel-loader": "^8.1.0",
     "chai": "^4.2.0",
-    "mocha": "^6.2.2",
+    "mocha": "^6.2.3",
     "nyc": "^14.1.1",
-    "ts-node": "^8.5.4",
-    "typescript": "^3.7.3",
-    "webpack": "^4.35.2",
+    "ts-node": "^8.8.2",
+    "typescript": "^3.8.3",
+    "webpack": "^4.42.1",
     "webpack-cli": "^3.3.5"
   },
   "dependencies": {
